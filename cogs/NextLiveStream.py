@@ -80,8 +80,8 @@ class NextLiveStreamCog(commands.Cog):
             msg = ("There is a livestream going on now! "
                    "Check out the Study Vibes YouTube channel.")
         else:
-            msg = (f"The next livestream is on "
-                    "{start_time.strftime(self.time_format)}")
+            msg = ("The next livestream is on "
+                  f"{start_time.strftime(self.time_format)}")
 
         await reply(ctx, msg)
 
