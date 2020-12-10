@@ -93,9 +93,8 @@ class NextLiveStreamCog(commands.Cog):
         HELEEN_TZ   = timezone(self.timezones['Heleen'.lower()])
         CALENDAR_ID = 'oro5litmqb6972jgi5bgp4dg4k@group.calendar.google.com'
         API_CALL    = (
-            'https://www.googleapis.com/calendar/v3/calendars/'
-            '{calendar_id}/events?maxResults=1&singleEvents=true&timeMin={}'
-            '&key={api_key}&orderBy=startTime'
+            'https://www.googleapis.com/calendar/v3/calendars/{}/events?'
+            'maxResults=1&singleEvents=true&timeMin={}&key={}&orderBy=startTime'
         )
 
         now = datetime.now().astimezone(HELEEN_TZ)
