@@ -14,7 +14,7 @@ from requests import get as http_get
 
 from discord.ext import commands
 
-from ..utils.utils import reply
+from .utils.utils import reply
 
 
 class NextLiveStreamCog(commands.Cog):
