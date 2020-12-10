@@ -1,4 +1,5 @@
 heleen      Europe/Brussels
+belgium     Europe/Brussels
 china       Asia/Shanghai
 india       Asia/Kolkata
 america     US/Eastern
