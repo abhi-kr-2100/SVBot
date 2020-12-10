@@ -83,7 +83,7 @@ class NextLiveStreamCog(commands.Cog):
             msg = ("The next livestream is on "
                   f"{start_time.strftime(self.time_format)}")
             if country != 'Heleen'.lower():
-                msg += f" (time according to {country.capitalize()})"
+                msg += f" (time according to {self.timezones[country]})"
             else:
                 msg += " (Heleen's original time)"
 
