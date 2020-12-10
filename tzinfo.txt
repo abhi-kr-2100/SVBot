@@ -1,0 +1,17 @@
+heleen      Europe/Brussels
+china       Asia/Shanghai
+india       Asia/Kolkata
+america     US/Eastern
+indonesia   Asia/Jakarta
+pakistan    Asia/Karachi
+brazil      Brazil/East
+bangladesh  Asia/Dhaka
+russia      Europe/Moscow
+mexico      America/Mexico_City
+japan       Asia/Tokyo
+egypt       Africa/Cairo
+germany     Europe/Berlin
+turkey      Europe/Istanbul
+netherlands Europe/Amsterdam
+portugal    Europe/Lisbon
+england     Europe/Belfast
