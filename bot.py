@@ -24,4 +24,8 @@ for filename in listdir('cogs'):
         cog_name = filename[:-len(COG_FILE_EXT)]
         bot.load_extension(f'cogs.{cog_name}')
 
+@bot.event
+async def on_ready():
+    print(f'{bot.user.name} is online!')
+
 bot.run(TOKEN)
