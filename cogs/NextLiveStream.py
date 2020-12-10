@@ -82,6 +82,10 @@ class NextLiveStreamCog(commands.Cog):
         else:
             msg = ("The next livestream is on "
                   f"{start_time.strftime(self.time_format)}")
+            if country != 'Heleen'.lower():
+                msg += f" (time according to {country.capitalize()})"
+            else:
+                msg += " (Heleen's original time)"
 
         await reply(ctx, msg)
 
