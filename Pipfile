@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 "discord.py" = "*"
 python-dotenv = "*"
+pytz = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
