@@ -35,35 +35,34 @@ class Quotes(commands.Cog):
                     'SELECT QuoteText FROM quotes'
                 ).fetchall()
             )[0]
-        else:
-            tag = tag.lower()
 
-            tag_id = self.c.execute(
-                'SELECT TagId FROM tags WHERE TagName=?', (tag,)
-            ).fetchone()
+            await reply(ctx, quote)
+            return
+            
+        tag = tag.lower()
 
-            if tag_id is None:
-                await reply(
-                    ctx,
-                    f"No quotes tagged {tag} were found. "
-                    "Here's a random quote instead:"
-                )
+        tag_id = self.c.execute(
+            'SELECT TagId FROM tags WHERE TagName=?', (tag,)
+        ).fetchone()
 
-                quote = choice(
-                    self.c.execute(
-                        'SELECT QuoteText FROM quotes'
-                    ).fetchall()
-                )[0]
-            else:
-                quote_id = choice(
-                    self.c.execute(
-                        'SELECT QuoteId FROM links WHERE TagId=?', tag_id
-                    ).fetchall()
-                )
+        if tag_id is None:
+            await reply(
+                ctx,
+                f"No quotes tagged {tag} were found. "
+                "Here's a random quote instead:"
+            )
 
-                quote = self.c.execute(
-                    'SELECT QuoteText FROM quotes WHERE QuoteId=?', quote_id
-                ).fetchone()[0]
+            return await self.quote(ctx, None)
+
+        quote_id = choice(
+            self.c.execute(
+                'SELECT QuoteId FROM links WHERE TagId=?', tag_id
+            ).fetchall()
+        )
+
+        quote = self.c.execute(
+            'SELECT QuoteText FROM quotes WHERE QuoteId=?', quote_id
+        ).fetchone()[0]
 
         await reply(ctx, quote)
 
