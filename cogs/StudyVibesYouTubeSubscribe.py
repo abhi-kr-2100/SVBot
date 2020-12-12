@@ -139,7 +139,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             users = subs.read().split('\n')[:-1]
 
         for u_id in users:
-            user = discord.User(id=int(u_id))
+            user = await self.bot.fetch_user(int(u_id))
             await user.send(msg)
             await user.send(footer)
 
