@@ -6,7 +6,6 @@ from os.path import exists
 from requests import get as http_get
 
 from discord.ext import commands, tasks
-import discord
 
 from .utils.utils import reply
 
