@@ -6,6 +6,7 @@ The quotes are stored in a SQLite3 database called quotes.db.
 
 
 from random import choice
+from os import getenv
 import sqlite3
 
 from discord.ext import commands
@@ -19,7 +20,9 @@ class Quotes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-        self.conn = sqlite3.connect('quotes.db')
+        QUOTES_DB = getenv('QUOTES_DB')
+
+        self.conn = sqlite3.connect(QUOTES_DB)
         self.c = self.conn.cursor()
 
     @commands.command(
