@@ -16,6 +16,8 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.notify.start()
+
         self.subs_filename = getenv('SUBS_FILE')
 
         if not exists(self.subs_filename):
@@ -28,7 +30,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
         KEY = getenv('GOOGLE_API_KEY')
         self.api_call = (
-            'https://youtube.googleapis.com/youtube/v3/search'
+            'https://www.googleapis.com/youtube/v3/search'
             '?channelId={}&maxResults=1&order=date&type=video&key={}'
         ).format('UCo4KXTfs6xXL5JvUIf3321A', KEY)
 
@@ -66,9 +68,8 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     async def unsubscribe(self, ctx):
         """End the subscription started by subscribe."""
 
-        users = []
         with open(self.subs_filename) as subs:
-            users = subs.read().split('\n')
+            users = subs.read().split('\n')[:-1]
 
         if str(ctx.author.id) not in users:
             await reply(
@@ -135,7 +136,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         )
 
         with open(self.subs_filename) as subs:
-            users = subs.read().split('\n')
+            users = subs.read().split('\n')[:-1]
 
         for u_id in users:
             user = discord.User(id=int(u_id))
