@@ -57,7 +57,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         m = self.cur.execute(
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
             (member_id,)
-        ).fetchone()
+        )
 
         if m is not None:
             await reply(
@@ -87,8 +87,8 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
         m = self.cur.execute(
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
-            ctx.author.id
-        ).fetchone()
+            (ctx.author.id,)
+        )
 
         if m is None:
             await reply(
@@ -100,7 +100,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
         self.cur.execute(
             f'DELETE FROM {self.subs_table} WHERE member_id = %s',
-            ctx.author.id
+            (ctx.author.id,)
         )
 
         await reply(
