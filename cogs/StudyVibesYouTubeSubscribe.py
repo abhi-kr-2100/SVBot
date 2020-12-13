@@ -28,7 +28,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             '&channelId={}&eventType=live&maxResults=1&type=video&key={}'
         ).format('UCo4KXTfs6xXL5JvUIf3321A', KEY)
         
-        self.subs_table = 'SVYTSubscription'
+        self.subs_table = 'subscriptions'
 
         self.conn = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
         self.cur  = self.conn.cursor()
