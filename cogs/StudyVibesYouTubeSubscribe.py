@@ -112,7 +112,11 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             " `!subscribe` command."
         )
 
-    @tasks.loop(minutes=1)
+    # YouTube API's quota is 10,000. Each search costs 100 points.
+    # This means, in one day (24 * 60 minutes) a maximum of 10,000 / 100 = 100
+    # API calls can be made. This can be done by calling the API approximately
+    # every 15 minutes.
+    @tasks.loop(minutes=15)
     async def notify(self):
         """Notify subscribed users when Study Vibes goes live."""
 
