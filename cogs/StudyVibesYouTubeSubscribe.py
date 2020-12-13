@@ -52,10 +52,11 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     async def subscribe(self, ctx):
         """Subscribe the author to receive a DM when Study Vibes goes live."""
         
-        m = self.cur.execute(
+        self.cur.execute(
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
             (ctx.author.id,)
         )
+        m = self.cur.fetchone()[0]
 
         if m is not None:
             await reply(
@@ -84,10 +85,11 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     async def unsubscribe(self, ctx):
         """End the subscription started by subscribe."""
 
-        m = self.cur.execute(
+        self.cur.execute(
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
             (ctx.author.id,)
         )
+        m = self.cur.fetchone()[0]
 
         if m is None:
             await reply(
