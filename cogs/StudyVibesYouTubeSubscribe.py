@@ -29,8 +29,8 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
         KEY = getenv('GOOGLE_API_KEY')
         self.api_call = (
-            'https://www.googleapis.com/youtube/v3/search'
-            '?channelId={}&maxResults=1&order=date&type=video&key={}'
+            'https://youtube.googleapis.com/youtube/v3/search?part=id'
+            '&channelId={}&eventType=live&maxResults=1&type=video&key={}'
         ).format('UCo4KXTfs6xXL5JvUIf3321A', KEY)
 
     @commands.command(
