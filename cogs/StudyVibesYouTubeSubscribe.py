@@ -116,9 +116,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     async def notify(self):
         """Notify subscribed users when Study Vibes goes live."""
 
-        if (upcoming := self._get_vid('upcoming')) is not None:
-            await self._send_notifs(upcoming, False)
-        elif (live := self._get_vid('live')) is not None:
+        if (live := self._get_vid('live')) is not None:
             await self._send_notifs(live, True)
 
     def _get_vid(self, type):
@@ -128,9 +126,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         If there are no such videos, return None.
         """
 
-        API_CALL = self.api_call + f'&eventType={type}'
-
-        resp = http_get(API_CALL)
+        resp = http_get(self.api_call)
         if resp.status_code != 200:
             return
 
