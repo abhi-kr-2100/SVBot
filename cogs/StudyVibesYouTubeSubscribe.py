@@ -56,7 +56,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
             (ctx.author.id,)
         )
-        m = self.cur.fetchone()[0]
+        m = self.cur.fetchone()
 
         if m is not None:
             await reply(
@@ -89,7 +89,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
             (ctx.author.id,)
         )
-        m = self.cur.fetchone()[0]
+        m = self.cur.fetchone()
 
         if m is None:
             await reply(
