@@ -152,9 +152,10 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             "`!unsubscribe` command."
         )
 
-        subscribers = self.cur.execute(
+        self.cur.execute(
             f'SELECT member_id FROM {self.subs_table}'
-        ).fetchall()
+        )
+        subscribers = self.cur.fetchall()
 
         for u_id in subscribers:
             user = await self.bot.fetch_user(int(u_id[0]))
