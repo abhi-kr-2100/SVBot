@@ -41,6 +41,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             );
             """
         )
+        self.conn.commit()
 
         self.notify.start()
 
@@ -69,6 +70,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             f'INSERT INTO {self.subs_table}(member_id) VALUES(%s)',
             (member_id,)
         )
+        self.conn.commit()
 
         await reply(
             ctx,
@@ -101,6 +103,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             f'DELETE FROM {self.subs_table} WHERE member_id = %s',
             (ctx.author.id,)
         )
+        self.conn.commit()
 
         await reply(
             ctx,
