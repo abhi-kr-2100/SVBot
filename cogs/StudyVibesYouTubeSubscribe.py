@@ -51,12 +51,10 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     )
     async def subscribe(self, ctx):
         """Subscribe the author to receive a DM when Study Vibes goes live."""
-
-        member_id = ctx.author.id
         
         m = self.cur.execute(
             f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
-            (member_id,)
+            (ctx.author.id,)
         )
 
         if m is not None:
@@ -68,7 +66,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
         self.cur.execute(
             f'INSERT INTO {self.subs_table}(member_id) VALUES(%s)',
-            (member_id,)
+            (ctx.author.id,)
         )
         self.conn.commit()
 
