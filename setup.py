@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="SVBot",
-    version="0.3.0",
+    version="0.4.0",
 
     description="A modular and extensible Discord bot.",
     long_description=open('README.md').read(),
