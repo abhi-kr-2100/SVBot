@@ -37,7 +37,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         self.cur.execute(
             f"""
             CREATE TABLE IF NOT EXISTS {self.subs_table} (
-                id          SERIAL PRIMARY KEY
+                id          SERIAL PRIMARY KEY,
                 member_id   INT UNIQUE
             );
             """
