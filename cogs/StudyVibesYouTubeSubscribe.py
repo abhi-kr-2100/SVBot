@@ -2,7 +2,6 @@
 
 
 from os import getenv
-from os.path import exists
 from requests import get as http_get
 
 import psycopg2
