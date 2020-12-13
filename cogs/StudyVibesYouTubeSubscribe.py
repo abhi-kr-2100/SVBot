@@ -5,6 +5,8 @@ from os import getenv
 from os.path import exists
 from requests import get as http_get
 
+import psycopg2
+
 from discord.ext import commands, tasks
 
 from .utils.utils import reply
@@ -15,13 +17,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.notify.start()
-
-        self.subs_filename = getenv('SUBS_FILE')
-
-        if not exists(self.subs_filename):
-            open(self.subs_filename, 'w')
-
+        
         # ID of the video for which the most recent notification has been sent
         # this is used to prevent the bot from notifying for the same video
         # multiple times
@@ -32,6 +28,22 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             'https://youtube.googleapis.com/youtube/v3/search?part=id'
             '&channelId={}&eventType=live&maxResults=1&type=video&key={}'
         ).format('UCo4KXTfs6xXL5JvUIf3321A', KEY)
+        
+        self.subs_table = 'SVYTSubscription'
+
+        self.conn = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+        self.cur  = self.conn.cursor()
+
+        self.cur.execute(
+            f"""
+            CREATE TABLE IF NOT EXISTS {self.subs_table} (
+                id          SERIAL PRIMARY KEY
+                member_id   INT UNIQUE
+            );
+            """
+        )
+
+        self.notify.start()
 
     @commands.command(
         name='subscribe',
@@ -40,18 +52,24 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     async def subscribe(self, ctx):
         """Subscribe the author to receive a DM when Study Vibes goes live."""
 
-        with open(self.subs_filename) as subs:
-            users = subs.read().split('\n')[:-1]
+        member_id = ctx.author.id
+        
+        m = self.cur.execute(
+            f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
+            (member_id,)
+        ).fetchone()
 
-        with open(self.subs_filename, 'a+') as subs:
-            if str(ctx.author.id) in users:
-                await reply(
-                    ctx,
-                    "You're already subscribed. To unsubscribe, use "
-                    "`!unsubscribe`."
-                )
-                return
-            print(ctx.author.id, file=subs)
+        if m is not None:
+            await reply(
+                ctx,
+                "You're already subscribed. To unsubscribe, use `!unsubscribe`."
+            )
+            return
+
+        self.cur.execute(
+            f'INSERT INTO {self.subs_table}(member_id) VALUES(%s)',
+            (member_id,)
+        )
 
         await reply(
             ctx,
@@ -67,21 +85,23 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
     async def unsubscribe(self, ctx):
         """End the subscription started by subscribe."""
 
-        with open(self.subs_filename) as subs:
-            users = subs.read().split('\n')[:-1]
+        m = self.cur.execute(
+            f'SELECT id FROM {self.subs_table} WHERE member_id = %s',
+            ctx.author.id
+        ).fetchone()
 
-        if str(ctx.author.id) not in users:
+        if m is None:
             await reply(
                 ctx,
                 "You are not subscribed. Please run `!subscribe` before "
                 "`!unsubscribe` (😁)."
             )
             return
-        users.remove(str(ctx.author.id))
 
-        with open(self.subs_filename, 'w') as subs:
-            for u in users:
-                print(u, file=subs)
+        self.cur.execute(
+            f'DELETE FROM {self.subs_table} WHERE member_id = %s',
+            ctx.author.id
+        )
 
         await reply(
             ctx,
@@ -134,11 +154,12 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             "`!unsubscribe` command."
         )
 
-        with open(self.subs_filename) as subs:
-            users = subs.read().split('\n')[:-1]
+        subscribers = self.cur.execute(
+            f'SELECT member_id FROM {self.subs_table}'
+        ).fetchall()
 
-        for u_id in users:
-            user = await self.bot.fetch_user(int(u_id))
+        for u_id in subscribers:
+            user = await self.bot.fetch_user(int(u_id[0]))
             await user.send(msg)
             await user.send(footer)
 
