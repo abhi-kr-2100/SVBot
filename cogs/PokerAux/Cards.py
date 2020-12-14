@@ -63,21 +63,17 @@ class Card:
             rank_symb = rank_name
 
         if self.suit == CardSuit.diamond:
-            suit_name = 'Diamonds'
             suit_symb = ':diamonds:'
         elif self.suit == CardSuit.club:
-            suit_name = 'Clubs'
             suit_symb = ':clubs:'
         elif self.suit == CardSuit.heart:
-            suit_name = 'Hearts'
             suit_symb = ':hearts:'
         elif self.suit == CardSuit.spade:
-            suit_name = 'Spades'
             suit_symb = ':spades:'
         else:
             assert False, "This shouldn't have happened!"
 
-        return f"{rank_name} of {suit_name} ({rank_symb} {suit_symb})"
+        return f"{rank_symb} {suit_symb}"
 
 
 class Deck:
