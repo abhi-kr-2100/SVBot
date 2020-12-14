@@ -50,6 +50,8 @@ class Game:
     async def preflop(self):
         """Prepare the game for the next turn."""
 
+        self._pre_turn_setup()
+
         self.deck.reset()
         self._deal_holes()
         self._setup_blinds()
@@ -66,7 +68,9 @@ class Game:
 
     async def flop(self):
         """Deal the poker flop."""
-
+        
+        self._pre_turn_setup()
+        
         c1, c2, c3 = self.deck.deal(3)
         self.community_cards += [c1, c2, c3]
 
@@ -77,6 +81,8 @@ class Game:
     async def turn(self):
         """The stage in poker after the flop."""
 
+        self._pre_turn_setup()
+        
         c4 = self.deck.deal()
         self.community_cards += [c4]
 
@@ -87,6 +93,8 @@ class Game:
     async def river(self):
         """The last hand in a poker turn."""
 
+        self._pre_turn_setup()
+        
         c5 = self.deck.deal()
         self.community_cards.append(c5)
 
@@ -219,3 +227,9 @@ class Game:
             await self.ctx.send(
                 f"{bb.member.mention} You're the big blind."
             )
+
+    def _pre_turn_setup(self):
+        """Set up the game for a new turn."""
+
+        self.min_bet = 0
+        self.pending_players = []
