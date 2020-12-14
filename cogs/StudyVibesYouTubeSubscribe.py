@@ -161,7 +161,8 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
 
         for u_id in subscribers:
             user = await self.bot.fetch_user(int(u_id[0]))
-            await user.send(msg + '\n' + footer)
+            await user.send(msg)
+            await user.send(footer)
 
 
 def setup(bot):
