@@ -58,7 +58,10 @@ class Game:
     async def start_betting(self):
         """Wait till all players have had their turn."""
 
-        while any(p.betted != self.min_bet for p in self.players if p.active):
+        while any(
+            p.betted != self.min_bet and not p.active \
+                for p in self.pending_players
+        ):
             pass
 
     async def flop(self):
