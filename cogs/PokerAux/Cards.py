@@ -101,7 +101,7 @@ class Deck:
         for i in range(n):
             cards.append(self.cards.pop())
 
-        return cards
+        return cards if n != 1 else cards[0]
 
     def reset(self):
         """Start the deck anew, but shuffled."""
