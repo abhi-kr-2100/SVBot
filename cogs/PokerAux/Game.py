@@ -42,6 +42,7 @@ class Game:
 
         # player whose turn it is
         self.pending_players = []
+        self.pending_index = 0
 
         self.winners = None
 
@@ -59,6 +60,8 @@ class Game:
 
     async def start_betting(self):
         """Wait till all players have had their turn."""
+
+        self.pending_index = 0
 
         while any(
             (p.betted != self.min_bet or p.active) for p in self.pending_players
@@ -232,3 +235,4 @@ class Game:
 
         self.min_bet = 0
         self.pending_players = []
+        self.pending_index = 0
