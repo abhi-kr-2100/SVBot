@@ -121,7 +121,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         """Notify subscribed users when Study Vibes goes live."""
 
         if (live := self._get_vid()) is not None:
-            await self._send_notifs(live, True)
+            await self._send_notifs(live)
 
     def _get_vid(self):
         """
