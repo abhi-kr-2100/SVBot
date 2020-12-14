@@ -30,10 +30,10 @@ class CardRank(IntEnum):
 class CardSuit(Enum):
     """One of the four playing suits."""
 
-    diamond = 1
-    heart   = 2
-    club    = 3
-    spade   = 4
+    spades = 1
+    hearts = 2
+    diamonds = 3
+    clubs = 4
 
 
 class Card:
@@ -44,6 +44,11 @@ class Card:
 
         self.rank = rank
         self.suit = suit
+
+    def __repr__(self):
+        """Supposed to be compatible with the pokereval module."""
+
+        return (self.rank.value, self.suit.value)
 
     def __str__(self):
         if self.rank == CardRank.jack:
@@ -62,13 +67,13 @@ class Card:
             rank_name = str(self.rank.value)
             rank_symb = rank_name
 
-        if self.suit == CardSuit.diamond:
+        if self.suit == CardSuit.diamonds:
             suit_symb = ':diamonds:'
-        elif self.suit == CardSuit.club:
+        elif self.suit == CardSuit.clubs:
             suit_symb = ':clubs:'
-        elif self.suit == CardSuit.heart:
+        elif self.suit == CardSuit.hearts:
             suit_symb = ':hearts:'
-        elif self.suit == CardSuit.spade:
+        elif self.suit == CardSuit.spades:
             suit_symb = ':spades:'
         else:
             assert False, "This shouldn't have happened!"
