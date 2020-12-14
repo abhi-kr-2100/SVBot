@@ -57,7 +57,7 @@ class Game:
     async def start_betting(self):
         """Complete the betting by players for one round."""
 
-        while self.pending_players:
+        while any(p.turn_pending for p in self.players):
             if not self.pending_players[0].turn_pending:
                 self.pending_players.pop(0)
 
