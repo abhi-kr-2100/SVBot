@@ -123,7 +123,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         if (live := self._get_vid('live')) is not None:
             await self._send_notifs(live, True)
 
-    def _get_vid(self, type):
+    def _get_vid(self):
         """
         Return the ID of an upcoming/live video on Study Vibes.
         
@@ -137,7 +137,7 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
         vids = resp.json()['items']
         return None if not vids else vids[0]['id']['videoId']
 
-    async def _send_notifs(self, vid_id, live):
+    async def _send_notifs(self, vid_id):
         """Send a DM to subscribers with the given video ID."""
 
         if self.vid_id == vid_id:
@@ -147,10 +147,8 @@ class StudyVibesYouTubeSubscribe(commands.Cog):
             self.vid_id = vid_id
 
         url = f'https://www.youtube.com/watch?v={vid_id}'
-        if live:
-            msg = f"Study Vibes just went live: {url}"
-        else:
-            msg = f"Study Vibes is about to go live: {url}"
+        
+        msg = f"Study Vibes just went live: {url}"
         footer = (
             "If you would like to stop receiving these DMs, please use the "
             "`!unsubscribe` command."
