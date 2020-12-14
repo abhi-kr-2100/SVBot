@@ -90,6 +90,11 @@ class Game:
         await self._display_community_cards()
 
         self._assign_turns(self.small_blind_i)
+
+    async def showdown(self):
+        """Time for remaining players to compare cards."""
+
+        pass
             
     def _assign_turns(self, start):
         """Change players to be pending turn."""
