@@ -57,7 +57,9 @@ class Game:
     async def start_betting(self):
         """Complete the betting by players for one round."""
 
-        pass
+        while self.pending_players:
+            if not self.pending_players[0].turn_pending:
+                self.pending_players.pop(0)
 
     async def deal_flop(self):
         """Deal the poker flop."""
