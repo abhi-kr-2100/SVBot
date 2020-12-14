@@ -52,9 +52,9 @@ class Game:
         self._pre_turn_setup()
 
         self.deck.reset()
-        self._deal_holes()
-        self._setup_blinds()
-        self._post_blinds()
+        await self._deal_holes()
+        await self._setup_blinds()
+        await self._post_blinds()
 
     def start_betting(self):
         """Wait till all players have had their turn."""
