@@ -61,7 +61,7 @@ class Game:
             if not self.pending_players[0].turn_pending:
                 self.pending_players.pop(0)
 
-    async def deal_flop(self):
+    async def flop(self):
         """Deal the poker flop."""
 
         c1, c2, c3 = self.deck.deal(3)
