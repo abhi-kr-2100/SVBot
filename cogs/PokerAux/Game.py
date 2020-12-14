@@ -131,14 +131,14 @@ class Game:
         bg_b = self.players[self.big_blind_i]
 
         sm_b.chips -= self.sm_blind_bet
-        sm_b.bet_pending += self.sm_blind_bet
+        sm_b.betted += self.sm_blind_bet
         await self.ctx.send(
             f'{sm_b.member.mention} posts small blind of '
             f'{self.sm_blind_bet}.'
         )
         
         bg_b.chips -= 2 * self.sm_blind_bet
-        bg_b.bet_pending += 2 * self.sm_blind_bet
+        bg_b.betted += 2 * self.sm_blind_bet
         await self.ctx.send(
             f'{bg_b.member.mention} posts big blind of '
             f'{2 * self.sm_blind_bet}'
