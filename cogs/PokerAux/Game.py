@@ -96,6 +96,7 @@ class Game:
         for i in range(self.big_blind_i + 1, self.big_blind_i + self.n + 1):
             p = self.players[i % self.n]
             p.bet_pending += self.min_bet
+            p.turn_pending = True
             self.pending_players.append(p)
 
     async def _introduce(self):
