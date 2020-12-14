@@ -56,7 +56,7 @@ class Game:
         self._setup_blinds()
         self._post_blinds()
 
-    async def start_betting(self):
+    def start_betting(self):
         """Wait till all players have had their turn."""
 
         self.pending_index = 0
