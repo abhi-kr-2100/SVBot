@@ -57,9 +57,19 @@ class Game:
     async def start_betting(self):
         """Complete the betting by players for one round."""
 
-        while self.pending_players:
-            if not self.pending_players[0].bet_pending:
-                self.pending_players.pop()
+        pass
+
+    async def deal_flop(self):
+        """Deal the poker flop."""
+
+        c1, c2, c3 = self.deck.deal(3)
+        self.community_cards += [c1, c2, c3]
+
+        await self._display_community_cards()
+
+    async def _display_community_cards(self):
+        to_display = ' '.join(f'({c})' for c in self.community_cards)
+        await self.ctx.send(f"Community Cards: {to_display}")
     
     async def _post_blinds(self):
         """Enforce blind bets."""
@@ -68,12 +78,14 @@ class Game:
         bg_b = self.players[self.big_blind_i]
 
         sm_b.chips -= self.sm_blind_bet
+        sm_b.bet_pending += self.sm_blind_bet
         await self.ctx.send(
             f'{sm_b.member.mention} posts small blind of '
             f'{self.sm_blind_bet}.'
         )
         
         bg_b.chips -= 2 * self.sm_blind_bet
+        bg_b.bet_pending += 2 * self.sm_blind_bet
         await self.ctx.send(
             f'{bg_b.member.mention} posts big blind of '
             f'{2 * self.sm_blind_bet}'
@@ -81,7 +93,7 @@ class Game:
 
         self.min_bet = 2 * self.sm_blind_bet
 
-        for i in range(self.small_blind_i, self.small_blind_i + self.n):
+        for i in range(self.big_blind_i + 1, self.big_blind_i + self.n + 1):
             p = self.players[i % self.n]
             p.bet_pending += self.min_bet
             self.pending_players.append(p)
