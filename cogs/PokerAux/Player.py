@@ -25,4 +25,4 @@ class Player:
         self.member = member
         self.chips = chips
         self.status = status
-        self.turn_pending = False
+        self.bet_pending = 0
