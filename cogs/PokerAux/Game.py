@@ -80,6 +80,16 @@ class Game:
         await self._display_community_cards()
 
         self._assign_turns(self.small_blind_i)
+
+    async def river(self):
+        """The last hand in a poker turn."""
+
+        c5 = self.deck.deal()
+        self.community_cards.append(c5)
+
+        await self._display_community_cards()
+
+        self._assign_turns(self.small_blind_i)
             
     def _assign_turns(self, start):
         """Change players to be pending turn."""
