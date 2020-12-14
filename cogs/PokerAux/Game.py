@@ -155,7 +155,7 @@ class Game:
             if self.di is None:
                 self.di = randint(0, self.n - 1)
             else:
-                self.di += 1
+                self.di = (self.di + 1) % self.n
 
             self.players[self.di % self.n].status = PlayerStatus.dealer
 
