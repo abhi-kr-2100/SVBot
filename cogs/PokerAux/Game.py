@@ -52,7 +52,7 @@ class Game:
 
         return None if len(self.players) != 1 else self.players[0]
         
-    async def setup_turn(self):
+    async def preflop(self):
         """Prepare the game for the next turn."""
 
         self.deck.reset()
