@@ -4,7 +4,11 @@ the poker game.
 """
 
 
+import enum
 from random import randint
+
+from pokereval.card import Card
+from pokereval.hand_evaluator import HandEvaluator
 
 from .Cards import Deck
 from .Player import Player, PlayerStatus
@@ -93,8 +97,24 @@ class Game:
     async def showdown(self):
         """Time for remaining players to compare cards."""
 
-        pass
-            
+        community_cards = [Card(*repr(c)) for c in self.community_cards]
+        
+        max_score = 0
+        winners = []
+
+        for p in self.players:
+            if p.active:
+                hole_cards = [Card(*repr(c)) for c in p.hole_cards]
+                score = HandEvaluator.evaluate_hand(hole_cards, community_cards)
+                
+                if score > max_score:
+                    max_score = score
+                    winners = [p]
+                elif score == max_score:
+                    winners.append(p)
+
+        self.winners = winners
+
     def _assign_turns(self, start):
         """Change players to be pending turn."""
 
