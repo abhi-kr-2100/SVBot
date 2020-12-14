@@ -55,7 +55,7 @@ class Game:
         self._post_blinds()
 
     async def start_betting(self):
-        """Complete the betting by players for one round."""
+        """Wait till all players have had their turn."""
 
         while any(p.turn_pending for p in self.players):
             pass
