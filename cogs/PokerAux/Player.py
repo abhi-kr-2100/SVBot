@@ -35,3 +35,5 @@ class Player:
         # a negative value means: player has posted blinds
         # a positive value indicates the amount of bets pending
         self.bet_pending = 0
+
+        self.hole_cards = None
