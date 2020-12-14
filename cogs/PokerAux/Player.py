@@ -26,6 +26,8 @@ class Player:
         self.chips = chips
         self.status = status
 
+        self.turn_pending = False
+        
         # 0 means: no bet pending, and no action allowed
         # a negative value means: player has posted blinds
         # a positive value indicates the amount of bets pending
