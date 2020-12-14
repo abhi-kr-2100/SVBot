@@ -43,6 +43,8 @@ class Game:
         # player whose turn it is
         self.pending_players = []
 
+        self.winners = None
+
         await self._introduce()
 
     def winner(self):
