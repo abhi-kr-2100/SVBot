@@ -69,10 +69,7 @@ class Game:
 
         await self._display_community_cards()
 
-        for i in range(self.small_blind_i, self.small_blind_i + self.n):
-            p = self.players[i % self.n]
-            p.turn_pending = True
-            self.pending_players.append(p)
+        self._assign_turns(self.small_blind_i)
 
     async def turn(self):
         """The stage in poker after the flop."""
@@ -82,7 +79,12 @@ class Game:
 
         await self._display_community_cards()
 
-        for i in range(self.small_blind_i, self.small_blind_i + self.n):
+        self._assign_turns(self.small_blind_i)
+            
+    def _assign_turns(self, start):
+        """Change players to be pending turn."""
+
+        for i in range(start, start + self.n):
             p = self.players[i % self.n]
             p.turn_pending = True
             self.pending_players.append(p)
@@ -113,11 +115,7 @@ class Game:
 
         self.min_bet = 2 * self.sm_blind_bet
 
-        for i in range(self.big_blind_i + 1, self.big_blind_i + self.n + 1):
-            p = self.players[i % self.n]
-            p.bet_pending += self.min_bet
-            p.turn_pending = True
-            self.pending_players.append(p)
+        self._assign_turns(self.big_blind_i + 1)
 
     async def _introduce(self):
         """Send an introductory message."""
