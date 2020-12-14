@@ -16,5 +16,7 @@ turkey      Europe/Istanbul
 netherlands Europe/Amsterdam
 portugal    Europe/Lisbon
 england     Europe/Belfast
+uk          Europe/Belfast
 australia   Australia/Canberra
 denmark     Europe/Copenhagen
+italy       Europe/Rome
