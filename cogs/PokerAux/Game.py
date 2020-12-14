@@ -61,8 +61,7 @@ class Game:
         """Wait till all players have had their turn."""
 
         while any(
-            p.betted != self.min_bet and not p.active \
-                for p in self.pending_players
+            (p.betted != self.min_bet or p.active) for p in self.pending_players
         ):
             pass
 
