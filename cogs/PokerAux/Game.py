@@ -17,7 +17,7 @@ from .Player import Player, PlayerStatus
 class Game:
     """A game of poker."""
 
-    async def __init__(self, ctx, players, starting_chips, sm_blind):
+    def __init__(self, ctx, players, starting_chips, sm_blind):
         self.ctx = ctx
 
         self.pot = 0
@@ -45,8 +45,6 @@ class Game:
         self.pending_index = 0
 
         self.winners = None
-
-        await self._introduce()
         
     async def preflop(self):
         """Prepare the game for the next turn."""
