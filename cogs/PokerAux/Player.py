@@ -27,6 +27,6 @@ class Player:
         self.status = status
 
         # 0 means: no bet pending, and no action allowed
-        # a negative value means: no bet pending, but action allowed
+        # a negative value means: player has posted blinds
         # a positive value indicates the amount of bets pending
         self.bet_pending = 0
