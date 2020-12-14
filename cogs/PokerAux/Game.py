@@ -46,11 +46,6 @@ class Game:
         self.winners = None
 
         await self._introduce()
-
-    def winner(self):
-        """Return the winner of the game."""
-
-        return None if len(self.players) != 1 else self.players[0]
         
     async def preflop(self):
         """Prepare the game for the next turn."""
