@@ -28,6 +28,9 @@ class Player:
 
         self.turn_pending = False
         
+        # not active means the player is out or folded
+        self.active = True
+
         # 0 means: no bet pending, and no action allowed
         # a negative value means: player has posted blinds
         # a positive value indicates the amount of bets pending
