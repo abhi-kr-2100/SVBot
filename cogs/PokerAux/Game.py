@@ -74,6 +74,19 @@ class Game:
             p.turn_pending = True
             self.pending_players.append(p)
 
+    async def turn(self):
+        """The stage in poker after the flop."""
+
+        c4 = self.deck.deal()
+        self.community_cards += [c4]
+
+        await self._display_community_cards()
+
+        for i in range(self.small_blind_i, self.small_blind_i + self.n):
+            p = self.players[i % self.n]
+            p.turn_pending = True
+            self.pending_players.append(p)
+
     async def _display_community_cards(self):
         to_display = ' '.join(f'({c})' for c in self.community_cards)
         await self.ctx.send(f"Community Cards: {to_display}")
