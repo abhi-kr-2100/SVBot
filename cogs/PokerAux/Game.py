@@ -59,7 +59,8 @@ class Game:
         self.pending_index = 0
 
         while any(
-            (p.betted != self.min_bet or p.active) for p in self.pending_players
+            p.betted != self.min_bet or p.turn_pending \
+                for p in self.pending_players
         ):
             await asyncio.sleep(0)
         
@@ -148,8 +149,9 @@ class Game:
 
         for i in range(start, start + self.n):
             p = self.players[i % self.n]
-            p.active = True
-            self.pending_players.append(p)
+            if p.active:
+                p.turn_pending = True
+                self.pending_players.append(p)
 
     async def _display_community_cards(self):
         to_display = ' '.join(f'({c})' for c in self.community_cards)
@@ -254,5 +256,7 @@ class Game:
         self.pending_index = 0
 
         for p in self.players:
-            p.active = False
+            if p.chips != 0:
+                p.active = True
+            p.turn_pending = False
             p.betted = 0
