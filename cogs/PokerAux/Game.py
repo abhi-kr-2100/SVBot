@@ -5,7 +5,7 @@ the poker game.
 
 
 import asyncio
-from random import randint
+from random import randint, choice
 
 from pokereval.card import Card
 from pokereval.hand_evaluator import HandEvaluator
@@ -130,7 +130,18 @@ class Game:
                 elif score == max_score:
                     winners.append(p)
 
-        self.winners = winners
+        self._divide_pot(winners)
+
+    def _divide_pot(self, winners):
+        """Divide the pot among the winners."""
+
+        amt_each = self.pot // len(winners)
+        amt_left = self.pot % len(winners)
+
+        for p in winners:
+            p.chips += amt_each
+
+        choice(winners).chips += amt_left
 
     def _assign_turns(self, start):
         """Change players to be pending turn."""
