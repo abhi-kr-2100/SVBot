@@ -121,7 +121,7 @@ class Game:
 
         for p in self.players:
             if p.active:
-                hole_cards = [Card(*repr(c)) for c in p.hole_cards]
+                hole_cards = [Card(*c.pec()) for c in p.hole_cards]
                 score = HandEvaluator.evaluate_hand(hole_cards, community_cards)
                 
                 if score > max_score:
