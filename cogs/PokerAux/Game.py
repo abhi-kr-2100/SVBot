@@ -56,6 +56,8 @@ class Game:
         await self._setup_blinds()
         await self._post_blinds()
 
+        self._assign_turns(self.big_blind_i + 1)
+
     async def start_betting(self):
         """Wait till all players have had their turn."""
 
@@ -156,8 +158,6 @@ class Game:
         )
 
         self.min_bet = 2 * self.sm_blind_bet
-
-        self._assign_turns(self.big_blind_i + 1)
 
     async def _introduce(self):
         """Send an introductory message."""
