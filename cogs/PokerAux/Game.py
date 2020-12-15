@@ -45,6 +45,13 @@ class Game:
         self.pending_index = 0
 
         self.winners = None
+
+    def place_bet(self, player, amt):
+        """Place a bet of given amout on behalf of the given player."""
+
+        self.pot += amt
+        player.chips -= amt
+        player.betted += amt
         
     async def preflop(self):
         """Prepare the game for the next turn."""
