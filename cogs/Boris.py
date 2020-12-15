@@ -13,14 +13,14 @@ class Boris(commands.Cog):
         self.bot = bot
         self.ctx = None
 
-    @commands.command(
-        name='boris',
-        help='Display the Boris emoji.'
-    )
-    async def boris(self, ctx):
-        """Display :Boris: at arbitrary times."""
+    # @commands.command(
+    #     name='boris',
+    #     help='Display the Boris emoji.'
+    # )
+    # async def boris(self, ctx):
+    #     """Display :Boris: at arbitrary times."""
 
-        await ctx.send("<:Boris:756477965784842261>")
+    #     await ctx.send("<:Boris:756477965784842261>")
 
 
 def setup(bot):
