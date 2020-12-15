@@ -133,6 +133,11 @@ class Game:
 
         self._divide_pot(winners)
 
+    def next_round(self):
+        """Prepare the game for the next round."""
+
+        self.community_cards = []
+
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
 
