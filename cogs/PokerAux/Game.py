@@ -241,3 +241,7 @@ class Game:
         self.min_bet = 0
         self.pending_players = []
         self.pending_index = 0
+
+        for p in self.players:
+            p.active = False
+            p.betted = 0
