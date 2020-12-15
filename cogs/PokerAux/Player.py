@@ -26,6 +26,7 @@ class Player:
         self.chips = chips
         self.status = status
 
+        # the player hasn't has his/her turn in the round yet
         self.turn_pending = False
         
         # not active means the player is out or folded
@@ -33,10 +34,5 @@ class Player:
 
         # how much the player has betted this round
         self.betted = 0
-
-        # 0 means: no bet pending, and no action allowed
-        # a negative value means: player has posted blinds
-        # a positive value indicates the amount of bets pending
-        self.bet_pending = 0
 
         self.hole_cards = None
