@@ -122,6 +122,10 @@ class Game:
 
         for p in self.players:
             if p.active:
+                await self.ctx.send(
+                    f"{p.member.mention} -- "
+                    f"({p.hole_cards[0]}) ({p.hole_cards[1]})"
+                )
                 hole_cards = [Card(*c.pec()) for c in p.hole_cards]
                 score = HandEvaluator.evaluate_hand(hole_cards, community_cards)
                 
