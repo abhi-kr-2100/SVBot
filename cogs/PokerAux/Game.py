@@ -44,7 +44,7 @@ class Game:
         self.pending_players = []
         self.pending_index = 0
 
-        self.winners = None
+        self.winner = None
 
     def place_bet(self, player, amt):
         """Place a bet of given amout on behalf of the given player."""
@@ -149,6 +149,17 @@ class Game:
 
         self.community_cards = []
         self.pot = 0
+
+        for p in self.players:
+            if p.chips == 0:
+                p.active = False
+            else:
+                p.active = True
+
+        playing_players = [p for p in self.players if p.active]
+        if len(playing_players) == 1:
+            self.winner = playing_players[0]
+
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
