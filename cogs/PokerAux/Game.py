@@ -52,6 +52,16 @@ class Game:
         self.pot += amt
         player.chips -= amt
         player.betted += amt
+
+    async def start_betting(self):
+        """Wait till all players have had their turn."""
+
+        self.pending_index = 0
+
+        while any(
+            (p.betted != self.min_bet or p.active) for p in self.pending_players
+        ):
+            await asyncio.sleep(0)
         
     async def preflop(self):
         """Prepare the game for the next turn."""
@@ -64,16 +74,6 @@ class Game:
         await self._post_blinds()
 
         self._assign_turns(self.big_blind_i + 1)
-
-    async def start_betting(self):
-        """Wait till all players have had their turn."""
-
-        self.pending_index = 0
-
-        while any(
-            (p.betted != self.min_bet or p.active) for p in self.pending_players
-        ):
-            await asyncio.sleep(0)
 
     async def flop(self):
         """Deal the poker flop."""
