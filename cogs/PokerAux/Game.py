@@ -144,6 +144,7 @@ class Game:
         """Prepare the game for the next round."""
 
         self.community_cards = []
+        self.pot = 0
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
