@@ -45,7 +45,7 @@ class Card:
         self.rank = rank
         self.suit = suit
 
-    def __repr__(self):
+    def pec(self):
         """Supposed to be compatible with the pokereval module."""
 
         return (self.rank.value, self.suit.value)

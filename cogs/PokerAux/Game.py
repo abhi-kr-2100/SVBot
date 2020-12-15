@@ -114,7 +114,7 @@ class Game:
     async def showdown(self):
         """Time for remaining players to compare cards."""
 
-        community_cards = [Card(*repr(c)) for c in self.community_cards]
+        community_cards = [Card(*c.pec()) for c in self.community_cards]
         
         max_score = 0
         winners = []
