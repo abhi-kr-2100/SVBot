@@ -4,7 +4,7 @@ the poker game.
 """
 
 
-import enum
+import asyncio
 from random import randint
 
 from pokereval.card import Card
@@ -56,7 +56,7 @@ class Game:
         await self._setup_blinds()
         await self._post_blinds()
 
-    def start_betting(self):
+    async def start_betting(self):
         """Wait till all players have had their turn."""
 
         self.pending_index = 0
@@ -64,7 +64,7 @@ class Game:
         while any(
             (p.betted != self.min_bet or p.active) for p in self.pending_players
         ):
-            pass
+            await asyncio.sleep(0)
 
     async def flop(self):
         """Deal the poker flop."""
