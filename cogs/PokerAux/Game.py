@@ -139,7 +139,7 @@ class Game:
         for w in winners:
             await self.ctx.send(
                 f'{w.member.mention} with '
-                f'[({w.hole_cards[0]}) ({w.hole_cards[1]})]'
+                f'({w.hole_cards[0]}) and ({w.hole_cards[1]})'
             )
 
         self._divide_pot(winners)
