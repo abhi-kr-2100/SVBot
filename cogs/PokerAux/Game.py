@@ -137,7 +137,7 @@ class Game:
 
         for i in range(start, start + self.n):
             p = self.players[i % self.n]
-            p.turn_pending = True
+            p.active = True
             self.pending_players.append(p)
 
     async def _display_community_cards(self):
