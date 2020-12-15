@@ -131,6 +131,13 @@ class Game:
                 elif score == max_score:
                     winners.append(p)
 
+        await self.ctx.send('Winners of this round are:')
+        for w in winners:
+            await self.ctx.send(
+                f'{w.member.mention} with '
+                f'[{w.member.hole_cards[0]} {w.member.hole_cards[1]}]'
+            )
+
         self._divide_pot(winners)
 
     def next_round(self):
@@ -183,6 +190,7 @@ class Game:
         )
 
         self.min_bet = 2 * self.sm_blind_bet
+        self.pot += 3 * self.sm_blind_bet
 
     async def _introduce(self):
         """Send an introductory message."""
