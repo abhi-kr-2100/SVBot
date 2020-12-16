@@ -32,6 +32,9 @@ class Player:
         # not active means the player is out or folded
         self.active = True
 
+        # if the player went all in this round
+        self.all_in = False
+
         # how much the player has betted this round
         self.betted = 0
 
