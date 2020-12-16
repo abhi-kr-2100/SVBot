@@ -70,6 +70,8 @@ class Game:
     async def preflop(self):
         """Prepare the game for the next turn."""
 
+        await self.ctx.send("------ P R E F L O P ------")
+
         self._pre_turn_setup()
 
         self.deck.reset()
@@ -84,6 +86,8 @@ class Game:
         
         if self._all_folded():
             return
+
+        await self.ctx.send("------ F L O P ------")
 
         self._pre_turn_setup()
         
@@ -100,6 +104,8 @@ class Game:
         if self._all_folded():
             return
 
+        await self.ctx.send("------ T U R N ------")
+
         self._pre_turn_setup()
         
         c4 = self.deck.deal()
@@ -114,6 +120,8 @@ class Game:
 
         if self._all_folded():
             return
+
+        await self.ctx.send("------ R I V E R ------")
             
         self._pre_turn_setup()
         
