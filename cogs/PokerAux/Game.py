@@ -62,7 +62,10 @@ class Game:
             p.betted != self.min_bet or p.turn_pending \
                 for p in self.pending_players
         ):
-            await asyncio.sleep(0)
+            if self._all_folded():
+                break
+
+            await asyncio.sleep(0)  # allow other tasks to continue
         
     async def preflop(self):
         """Prepare the game for the next turn."""
