@@ -80,6 +80,9 @@ class Game:
         """Deal the poker flop."""
         
         self._pre_turn_setup()
+
+        if self._all_folded():
+            return
         
         c1, c2, c3 = self.deck.deal(3)
         self.community_cards += [c1, c2, c3]
@@ -92,6 +95,9 @@ class Game:
         """The stage in poker after the flop."""
 
         self._pre_turn_setup()
+
+        if self._all_folded():
+            return
         
         c4 = self.deck.deal()
         self.community_cards += [c4]
@@ -104,6 +110,9 @@ class Game:
         """The last hand in a poker turn."""
 
         self._pre_turn_setup()
+
+        if self._all_folded():
+            return
         
         c5 = self.deck.deal()
         self.community_cards.append(c5)
@@ -114,6 +123,9 @@ class Game:
 
     async def showdown(self):
         """Time for remaining players to compare cards."""
+
+        if self._all_folded():
+            return
 
         community_cards = [Card(*c.pec()) for c in self.community_cards]
         
@@ -160,6 +172,10 @@ class Game:
         if len(playing_players) == 1:
             self.winner = playing_players[0]
 
+    def _all_folded(self):
+        """Have all except one player folded?"""
+
+        return len([p for p in self.pending_players if p.active]) == 1
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
