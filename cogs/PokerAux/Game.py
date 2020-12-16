@@ -59,7 +59,7 @@ class Game:
         self.pending_index = 0
 
         while any(
-            p.betted != self.min_bet or p.turn_pending \
+            (p.betted != self.min_bet or p.turn_pending) and not p.all_in \
                 for p in self.pending_players
         ):
             if self._all_folded():
@@ -178,6 +178,7 @@ class Game:
                 p.active = False
             else:
                 p.active = True
+                p.all_in = False
 
         playing_players = [p for p in self.players if p.active]
         if len(playing_players) == 1:
