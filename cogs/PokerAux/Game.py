@@ -135,9 +135,6 @@ class Game:
     async def showdown(self):
         """Time for remaining players to compare cards."""
 
-        if self._all_folded():
-            return
-
         community_cards = [Card(*c.pec()) for c in self.community_cards]
         
         max_score = 0
