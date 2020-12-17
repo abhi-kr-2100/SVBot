@@ -70,6 +70,11 @@ class Game:
                 self.pending_index += 1
                 self.pending_index %= self.n
 
+            if not (pp := self.pending_players[self.pending_index]).not_folded:
+                pp.turn_pending = False
+                self.pending_index += 1
+                self.pending_index %= self.n
+
             await asyncio.sleep(0)  # allow other tasks to continue
         
     async def preflop(self):
@@ -145,7 +150,7 @@ class Game:
         max_score = 0
         winners = []
 
-        active_players = [p for p in self.players if p.active]
+        active_players = [p for p in self.players if p.not_folded]
 
         # everyone else has folded
         if len(active_players) == 1:
@@ -186,19 +191,19 @@ class Game:
 
         for p in self.players:
             if p.chips == 0:
-                p.active = False
+                p.not_folded = False
             else:
-                p.active = True
+                p.not_folded = True
                 p.all_in = False
 
-        playing_players = [p for p in self.players if p.active]
+        playing_players = [p for p in self.players if p.not_folded]
         if len(playing_players) == 1:
             self.winner = playing_players[0]
 
     def _all_folded(self):
         """Have all except one player folded?"""
 
-        return len([p for p in self.pending_players if p.active]) == 1
+        return len([p for p in self.pending_players if p.not_folded]) == 1
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
@@ -216,7 +221,7 @@ class Game:
 
         for i in range(start, start + self.n):
             p = self.players[i % self.n]
-            if p.active:
+            if p.not_folded:
                 p.turn_pending = True
                 self.pending_players.append(p)
 
@@ -326,6 +331,6 @@ class Game:
 
         for p in self.players:
             if p.chips != 0:
-                p.active = True
+                p.not_folded = True
             p.turn_pending = False
             p.betted = 0
