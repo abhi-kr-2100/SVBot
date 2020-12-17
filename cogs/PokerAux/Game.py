@@ -145,20 +145,29 @@ class Game:
         max_score = 0
         winners = []
 
-        for p in self.players:
-            if p.active:
-                await self.ctx.send(
-                    f"{p.member.mention} -- "
-                    f"({p.hole_cards[0]}) ({p.hole_cards[1]})"
-                )
-                hole_cards = [Card(*c.pec()) for c in p.hole_cards]
-                score = HandEvaluator.evaluate_hand(hole_cards, community_cards)
-                
-                if score > max_score:
-                    max_score = score
-                    winners = [p]
-                elif score == max_score:
-                    winners.append(p)
+        active_players = [p for p in self.players if p.active]
+
+        # everyone else has folded
+        if len(active_players) == 1:
+            await self.ctx.send(
+                f"{active_players[0].member.mention} wins this round."
+            )
+            self._divide_pot(active_players)
+            return
+
+        for p in active_players:
+            await self.ctx.send(
+                f"{p.member.mention} -- "
+                f"({p.hole_cards[0]}) ({p.hole_cards[1]})"
+            )
+            hole_cards = [Card(*c.pec()) for c in p.hole_cards]
+            score = HandEvaluator.evaluate_hand(hole_cards, community_cards)
+            
+            if score > max_score:
+                max_score = score
+                winners = [p]
+            elif score == max_score:
+                winners.append(p)
 
         await self.ctx.send('Winners of this round are:')
         for w in winners:
