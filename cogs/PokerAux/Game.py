@@ -59,11 +59,16 @@ class Game:
         self.pending_index = 0
 
         while any(
-            (p.betted != self.min_bet or p.turn_pending) and not p.all_in \
+            (p.betted != self.min_bet or p.turn_pending) \
                 for p in self.pending_players
         ):
             if self._all_folded():
                 break
+
+            if (pp := self.pending_players[self.pending_index]).all_in:
+                pp.turn_pending = False
+                self.pending_index += 1
+                self.pending_index %= self.n
 
             await asyncio.sleep(0)  # allow other tasks to continue
         
