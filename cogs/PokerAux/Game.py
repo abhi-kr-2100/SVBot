@@ -236,7 +236,7 @@ class Game:
             p = self.players[i % self.n]
             if p.not_folded:
                 p.turn_pending = True
-                self.pending_players.append(p)
+            self.pending_players.append(p)
 
     async def _display_community_cards(self):
         to_display = ' '.join(f'({c})' for c in self.community_cards)
