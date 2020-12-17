@@ -29,8 +29,8 @@ class Player:
         # the player hasn't has his/her turn in the round yet
         self.turn_pending = False
         
-        # not active means the player is out or folded
-        self.active = True
+        # has the player folded for this round
+        self.not_folded = True
 
         # if the player went all in this round
         self.all_in = False
