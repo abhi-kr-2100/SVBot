@@ -331,7 +331,5 @@ class Game:
         self.pending_index = 0
 
         for p in self.players:
-            if p.chips != 0:
-                p.not_folded = True
             p.turn_pending = False
             p.betted = 0
