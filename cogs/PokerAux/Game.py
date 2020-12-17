@@ -66,6 +66,9 @@ class Game:
             if self._all_folded():
                 break
 
+            if self._all_except_one_all_in():
+                break
+
             if (pp := self.pending_players[self.pending_index]).all_in:
                 pp.turn_pending = False
                 self.pending_index += 1
@@ -205,6 +208,15 @@ class Game:
         """Have all except one player folded?"""
 
         return len([p for p in self.pending_players if p.not_folded]) == 1
+
+    def _all_except_one_all_in(self):
+        """Is every player except one all in and there is no bet pending?"""
+
+        for p in [p for p in self.pending_players if p.not_folded]:
+            if not p.all_in and p.betted != self.min_bet:
+                return False
+                
+        return len([p for p in self.pending_players if p.all_in]) == 1
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
