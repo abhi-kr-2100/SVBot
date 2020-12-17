@@ -257,6 +257,7 @@ class Game:
         for p in self.players:
             c1, c2 = self.deck.deal(2)
             p.hole_cards = [c1, c2]
+            await p.member.send("Here are your cards:")
             await p.member.send(str(c1))
             await p.member.send(str(c2))
 
