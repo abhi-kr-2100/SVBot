@@ -59,8 +59,9 @@ class Game:
         self.pending_index = 0
 
         while any(
-            p.turn_pending or (p.betted != self.min_bet and not p.all_in) \
-                for p in self.pending_players
+            p.turn_pending or (p.betted != self.min_bet and \
+                (not p.all_in and p.not_folded)) \
+                    for p in self.pending_players
         ):
             if self._all_folded():
                 break
