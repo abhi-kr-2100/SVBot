@@ -28,8 +28,10 @@ class Player:
 
         # is the player still playing
         self.active = True
-        
+
         # the player hasn't has his/her turn in the round yet
+        # this attribute is used to only indicate whether the player has made
+        # his/her first move yet or not
         self.turn_pending = False
         
         # has the player folded for this round
