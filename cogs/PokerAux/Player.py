@@ -26,6 +26,9 @@ class Player:
         self.chips = chips
         self.status = status
 
+        # is the player still playing
+        self.active = True
+        
         # the player hasn't has his/her turn in the round yet
         self.turn_pending = False
         
