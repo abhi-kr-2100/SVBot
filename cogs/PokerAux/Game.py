@@ -363,3 +363,8 @@ class Game:
 
             if p.chips == 0:
                 p.active = False
+            else:
+                p.active = True
+
+        self.players = [p for p in self.players if p.active]
+        self.n = len(self.players)
