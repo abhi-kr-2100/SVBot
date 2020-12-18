@@ -90,16 +90,6 @@ class Game:
             if self._all_except_one_all_in():
                 break
 
-            if (pp := self.pending_players[self.pending_index]).all_in:
-                pp.turn_pending = False
-                self.pending_index += 1
-                self.pending_index %= self.n
-
-            if not (pp := self.pending_players[self.pending_index]).not_folded:
-                pp.turn_pending = False
-                self.pending_index += 1
-                self.pending_index %= self.n
-
             await asyncio.sleep(0)  # allow other tasks to continue
         
     async def preflop(self):
