@@ -58,6 +58,11 @@ class Game:
 
         self.pending_index = 0
 
+        # betting ends when:
+        # - all active players have at least made one move
+        # - all players have betted the minimum amount (if possible for them)
+        # - if they have not betted the minimum amount, they should either be
+        #   all-in or folded
         while any(
             p.turn_pending or (p.betted != self.min_bet and \
                 (not p.all_in and p.not_folded)) \
