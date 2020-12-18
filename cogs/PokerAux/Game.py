@@ -360,3 +360,6 @@ class Game:
         for p in self.players:
             p.turn_pending = False
             p.betted = 0
+
+            if p.chips == 0:
+                p.active = False
