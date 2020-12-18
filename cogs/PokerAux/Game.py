@@ -72,18 +72,24 @@ class Game:
         #
         # - if everyone or everyone except one player is all in.
         while True:
+            # how many players have not had even one turn to act
             turn_pending_players = len(
                 [p for p in self.pending_players if p.turn_pending]
             )
 
-            matched_or_all_in_or_folded = len(
-                [p for p in self.pending_players \
-                    if self.min_bet == p.betted or p.all_in or not p.not_folded]
+            # how many players have to bet more
+            # the players don't have to bet more only if they:
+            # - have gone all-in
+            # - have folded
+            held_players = len([p for p in self.pending_players \
+                if self.min_bet != p.betted and \
+                    not (p.all_in or not p.not_folded)]
             )
 
-            if turn_pending_players == matched_or_all_in_or_folded == 0:
+            if turn_pending_players == held_players == 0:
                 break
 
+            # all except one has folded; there's no one to bet
             if self._all_folded():
                 break
 
