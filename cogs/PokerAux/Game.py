@@ -63,11 +63,19 @@ class Game:
         # - all players have betted the minimum amount (if possible for them)
         # - if they have not betted the minimum amount, they should either be
         #   all-in or folded
-        while any(
-            p.turn_pending or (p.betted != self.min_bet and \
-                (not p.all_in and p.not_folded)) \
-                    for p in self.pending_players
-        ):
+        while True:
+            turn_pending_players = len(
+                [p for p in self.pending_players if p.turn_pending]
+            )
+
+            matched_or_all_in_or_folded = len(
+                [p for p in self.pending_players \
+                    if self.min_bet == p.betted or p.all_in or not p.not_folded]
+            )
+
+            if turn_pending_players == matched_or_all_in_or_folded == 0:
+                break
+            
             if self._all_folded():
                 break
 
