@@ -35,7 +35,7 @@ async def poker(cog, ctx, players):
         await cog.game.start_betting()
         
         await cog.game.showdown()
-        cog.game.next_round()
+        await cog.game.next_round()
 
     await ctx.send(f"{cog.game.winner.member.mention} wins the game!")
     await ctx.send(f"Game Over!")

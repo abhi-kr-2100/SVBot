@@ -226,7 +226,7 @@ class Game:
 
         self._divide_pot(winners)
 
-    def next_round(self):
+    async def next_round(self):
         """Prepare the game for the next round."""
 
         self.community_cards = []
