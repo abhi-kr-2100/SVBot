@@ -267,7 +267,12 @@ class Game:
 
         # have all not all in players met their obligations
         for p in not_all_in:
-            if p.not_folded or p.betted != self.min_bet:
+            # this player has betted the most; everyone else is trying to match
+            # him/her
+            if p.betted == self.min_bet:
+                continue
+
+            if p.not_folded:
                 # if they have not, the betting must continue
                 return False
 
