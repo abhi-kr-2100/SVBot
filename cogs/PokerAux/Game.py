@@ -234,18 +234,16 @@ class Game:
 
         for p in self.players:
             if p.chips == 0:
-                # use not_folded = False to represent players who have already
-                # lost the game
-                p.not_folded = False
+                # this player has lost the game
                 p.active = False
             else:
-                p.not_folded = True
                 p.active = True
-                p.all_in = False
 
-        playing_players = [p for p in self.players if p.not_folded]
-        if len(playing_players) == 1:
-            self.winner = playing_players[0]
+        self.players = [p for p in self.players if p.active]
+        self.n = len(self.players)
+        
+        if len(self.players) == 1:
+            self.winner = self.players[0]
 
     def _all_folded(self):
         """Have all except one player folded?"""
@@ -255,11 +253,7 @@ class Game:
     def _all_except_one_all_in(self):
         """Is every player except one all in and there is no bet pending?"""
 
-        for p in [p for p in self.pending_players if p.not_folded]:
-            if not p.all_in and p.betted != self.min_bet:
-                return False
-                
-        return len([p for p in self.pending_players if p.all_in]) == 1
+        return len([p for p in self.pending_players if not p.all_in]) <= 1
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
@@ -374,11 +368,3 @@ class Game:
         for p in self.players:
             p.turn_pending = False
             p.betted = 0
-
-            if p.chips == 0 and not p.all_in:
-                p.active = False
-            else:
-                p.active = True
-
-        self.players = [p for p in self.players if p.active]
-        self.n = len(self.players)
