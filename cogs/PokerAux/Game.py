@@ -183,6 +183,8 @@ class Game:
     async def showdown(self):
         """Time for remaining players to compare cards."""
 
+        # change the community cards to be compatible with pokereval's
+        # HandEvaluator
         community_cards = [Card(*c.pec()) for c in self.community_cards]
         
         max_score = 0
@@ -190,7 +192,7 @@ class Game:
 
         active_players = [p for p in self.players if p.not_folded]
 
-        # everyone else has folded
+        # the unfolded player wins by default; no need to show his/her cards
         if len(active_players) == 1:
             await self.ctx.send(
                 f"{active_players[0].member.mention} wins this round."
@@ -203,6 +205,9 @@ class Game:
                 f"{p.member.mention} -- "
                 f"({p.hole_cards[0]}) ({p.hole_cards[1]})"
             )
+
+            # change the hole cards to be compatible with pokereval's
+            # HandEvaluator
             hole_cards = [Card(*c.pec()) for c in p.hole_cards]
             score = HandEvaluator.evaluate_hand(hole_cards, community_cards)
             
@@ -229,6 +234,8 @@ class Game:
 
         for p in self.players:
             if p.chips == 0:
+                # use not_folded = False to represent players who have already
+                # lost the game
                 p.not_folded = False
             else:
                 p.not_folded = True
