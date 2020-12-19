@@ -237,8 +237,10 @@ class Game:
                 # use not_folded = False to represent players who have already
                 # lost the game
                 p.not_folded = False
+                p.active = False
             else:
                 p.not_folded = True
+                p.active = True
                 p.all_in = False
 
         playing_players = [p for p in self.players if p.not_folded]
@@ -373,7 +375,7 @@ class Game:
             p.turn_pending = False
             p.betted = 0
 
-            if p.chips == 0:
+            if p.chips == 0 and not p.all_in:
                 p.active = False
             else:
                 p.active = True
