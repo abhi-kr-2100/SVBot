@@ -3,6 +3,7 @@ belgium     Europe/Brussels
 china       Asia/Shanghai
 india       Asia/Kolkata
 america     US/Eastern
+us          US/Eastern
 indonesia   Asia/Jakarta
 pakistan    Asia/Karachi
 brazil      Brazil/East
