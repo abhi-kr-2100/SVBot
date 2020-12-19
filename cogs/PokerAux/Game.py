@@ -56,6 +56,7 @@ class Game:
     async def start_betting(self):
         """Wait till all players have had their turn."""
 
+        # the first pending player bets first
         self.pending_index = 0
 
         # betting ends when:
@@ -78,13 +79,16 @@ class Game:
             )
 
             # how many players have to bet more
-            # the players don't have to bet more only if they:
-            # - have gone all-in
-            # - have folded
-            held_players = len([p for p in self.pending_players \
-                if self.min_bet != p.betted and \
-                    not (p.all_in or not p.not_folded)]
-            )
+            # players don't have to bet more only if one of these is true:
+            # - they have matched min_bet
+            # - they have gone all-in
+            # - they have folded
+            held_players = []
+            for p in self.pending_players:
+                # player has matched min_bet
+                if self.min_bet == p.betted or p.all_in or not p.not_folded:
+                    continue
+                held_players.append(p)
 
             if turn_pending_players == held_players == 0:
                 break
@@ -125,6 +129,7 @@ class Game:
     async def flop(self):
         """Deal the poker flop."""
         
+        # winner has already been decided
         if self._all_folded():
             return
 
@@ -142,6 +147,7 @@ class Game:
     async def turn(self):
         """The stage in poker after the flop."""
 
+        # winner has already been decided
         if self._all_folded():
             return
 
@@ -159,6 +165,7 @@ class Game:
     async def river(self):
         """The last hand in a poker turn."""
 
+        # winner has already been decided
         if self._all_folded():
             return
 
@@ -291,24 +298,6 @@ class Game:
 
         self.min_bet = 2 * self.sm_blind_bet
         self.pot += 3 * self.sm_blind_bet
-
-    async def _introduce(self):
-        """Send an introductory message."""
-
-        INSTRUCTIONS_URL = 'https://gist.github.com/abhi-kr-2100/cfd1bc4fc4ed7a4578c03ef650f04f1c'
-        INTRO = (
-            "Welcome to Discord Poker.!\n\n"
-            "If you're playing for the first time, please read the instructions"
-            f" here carefully: {INSTRUCTIONS_URL}.\n\n"
-            "For optimal experience, use Discord in Light mode while playing "
-            "Discord Poker.\n\n"
-            "Enjoy the game! (FFF)"
-        )
-
-        await self.ctx.send(
-            ', '.join(f'{p.member.mention}' for p in self.players)
-        )
-        await self.ctx.send(INTRO)
 
     async def _deal_holes(self):
         """Deal hole cards to all players."""
