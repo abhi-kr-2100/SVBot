@@ -137,7 +137,7 @@ async def turn(cog, ctx):
     pp = cog.game.pending_players[cog.game.pending_index]
     await ctx.send(f"It's {pp.member.mention}'s turn.")
 
-async def runnable(self, ctx):
+async def runnable(self, ctx, pp=True):
     """Check against errors like wrong turn or not inside game."""
 
     if self.game is None:
@@ -147,13 +147,14 @@ async def runnable(self, ctx):
         )
         return False
 
-    pending_player = self.game.pending_players[self.game.pending_index]
-    if ctx.author != pending_player.member:
-        await reply(
-            ctx,
-            f"It's not your turn yet. "
-            f"{pending_player.member.mention} is supposed to act."
-        )
-        return False
+    if pp:
+        pending_player = self.game.pending_players[self.game.pending_index]
+        if ctx.author != pending_player.member:
+            await reply(
+                ctx,
+                f"It's not your turn yet. "
+                f"{pending_player.member.mention} is supposed to act."
+            )
+            return False
 
     return True
