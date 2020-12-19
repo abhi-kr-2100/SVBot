@@ -238,6 +238,10 @@ class Game:
                 p.active = False
             else:
                 p.active = True
+                p.turn_pending = True
+                p.not_folded = True
+                p.all_in = False
+                p.betted = 0
 
         self.players = [p for p in self.players if p.active]
         self.n = len(self.players)
