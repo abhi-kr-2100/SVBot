@@ -73,10 +73,10 @@ class Game:
         #
         # - if everyone or everyone except one player is all in.
         while True:
-            # how many players have not had even one turn to act
-            turn_pending_players = len(
-                [p for p in self.pending_players if p.turn_pending]
-            )
+            # players who have not had even one turn to act
+            turn_pending_players = [
+                p for p in self.pending_players if p.turn_pending
+            ]
 
             # how many players have to bet more
             # players don't have to bet more only if one of these is true:
@@ -90,7 +90,7 @@ class Game:
                     continue
                 held_players.append(p)
 
-            if turn_pending_players == held_players == 0:
+            if len(turn_pending_players) == len(held_players) == 0:
                 break
 
             # all except one has folded; there's no one to bet
