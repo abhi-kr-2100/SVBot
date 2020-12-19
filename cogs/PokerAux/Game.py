@@ -255,9 +255,23 @@ class Game:
         return len([p for p in self.pending_players if p.not_folded]) == 1
 
     def _all_except_one_all_in(self):
-        """Is every player except one all in and there is no bet pending?"""
+        """
+        Is every player except one all in?
+        
+        The one who is not all in, must not have any pending bets:
+            - should either be folded
+            - or matched
+        """
 
-        return len([p for p in self.pending_players if not p.all_in]) <= 1
+        not_all_in = [p for p in self.pending_players if not p.all_in]
+
+        # have all not all in players met their obligations
+        for p in not_all_in:
+            if p.not_folded or p.betted != self.min_bet:
+                # if they have not, the betting must continue
+                return False
+
+        return len(not_all_in) <= 1
 
     def _divide_pot(self, winners):
         """Divide the pot among the winners."""
