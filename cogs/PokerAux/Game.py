@@ -294,7 +294,7 @@ class Game:
 
         for i in range(start, start + self.n):
             p = self.players[i % self.n]
-            if p.not_folded:
+            if p.not_folded and not p.all_in:
                 p.turn_pending = True
             self.pending_players.append(p)
 
