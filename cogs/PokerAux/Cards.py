@@ -4,7 +4,7 @@ poker cards and deck.
 """
 
 
-from enum import IntEnum, unique
+from enum import Enum, IntEnum, unique
 from random import shuffle
 
 
@@ -42,7 +42,7 @@ class CardRank(IntEnum):
 
 
 @unique
-class CardSuit(IntEnum):
+class CardSuit(Enum):
     """One of the four playing suits."""
 
     spades      = 1
@@ -70,7 +70,7 @@ class CardSuit(IntEnum):
 class Card:
     """A playing card."""
 
-    def __init__(self, rank: CardRank, suit: CardSuit):
+    def __init__(self, rank: CardRank, suit: CardSuit) -> None:
         self.rank = rank
         self.suit = suit
 
@@ -86,12 +86,12 @@ class Card:
 class Deck:
     """A standard 52-card deck."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.cards = [
             Card(r, s) for s in list(CardSuit) for r in list(CardRank)
         ]
 
-    def shuffle_deck(self):
+    def shuffle_deck(self) -> None:
         """Shuffle all remaining cards."""
 
         shuffle(self.cards)
@@ -108,7 +108,7 @@ class Deck:
 
         return cards if n != 1 else cards[0]
 
-    def reset(self):
+    def reset(self) -> None:
         """Start the deck anew, but shuffled."""
 
         self.cards = [
