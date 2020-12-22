@@ -4,7 +4,7 @@ poker cards and deck.
 """
 
 
-from enum import IntEnum, Enum, unique, auto
+from enum import IntEnum, Enum, unique
 from random import shuffle
 
 
