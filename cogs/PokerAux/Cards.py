@@ -6,6 +6,7 @@ poker cards and deck.
 
 from enum import Enum, IntEnum, unique
 from random import shuffle
+from typing import List, Tuple
 
 
 @unique
@@ -52,7 +53,7 @@ class Card:
         self.rank = rank
         self.suit = suit
 
-    def pec(self) -> tuple[int, int]:
+    def pec(self) -> Tuple[int, int]:
         """Return a tuple that can be used to construct a pokereval.Card."""
 
         return (self.rank.value, self.suit.value)
@@ -74,7 +75,7 @@ class Deck:
 
         shuffle(self.cards)
 
-    def deal(self, n: int = 1) -> list[Card]:
+    def deal(self, n: int = 1) -> List[Card]:
         """Deal n cards from top of the deck."""
         
         if len(self.cards) < n:
