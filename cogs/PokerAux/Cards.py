@@ -41,7 +41,7 @@ class CardSuit(Enum):
 
     def __str__(self) -> str:
         """Return the appropriate code for the suit's Discord emoji."""
-        
+
         return f':{self.name}:'
 
 
@@ -80,11 +80,9 @@ class Deck:
         if len(self.cards) < n:
             raise ValueError("No enough cards to deal.")
 
-        cards = []
-        for i in range(n):
-            cards.append(self.cards.pop())
+        cards = [self.cards.pop() for _ in range(n)]
 
-        return cards if n != 1 else cards[0]
+        return cards
 
     def reset(self) -> None:
         """Start the deck anew, but shuffled."""

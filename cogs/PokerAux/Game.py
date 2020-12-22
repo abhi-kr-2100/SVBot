@@ -156,7 +156,7 @@ class Game:
         self._pre_turn_setup()
         
         c4 = self.deck.deal()
-        self.community_cards += [c4]
+        self.community_cards += c4
 
         await self._display_community_cards()
 
@@ -174,7 +174,7 @@ class Game:
         self._pre_turn_setup()
         
         c5 = self.deck.deal()
-        self.community_cards.append(c5)
+        self.community_cards += c5
 
         await self._display_community_cards()
 
