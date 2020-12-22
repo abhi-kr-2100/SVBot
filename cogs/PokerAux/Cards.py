@@ -27,16 +27,16 @@ class CardRank(IntEnum):
     ace     = 14
 
     def __str__(self) -> str:
-        if self.rank == CardRank.jack:
+        if self == CardRank.jack:
             rank_symb = 'J'
-        elif self.rank == CardRank.queen:
+        elif self == CardRank.queen:
             rank_symb = 'Q'
-        elif self.rank == CardRank.king:
+        elif self == CardRank.king:
             rank_symb = 'K'
-        elif self.rank == CardRank.ace:
+        elif self == CardRank.ace:
             rank_symb = 'A'
         else:
-            rank_symb = str(self.rank.value)
+            rank_symb = str(self.value)
 
         return rank_symb
 
@@ -55,13 +55,13 @@ class CardSuit(Enum):
         
         suit_symb = ''
 
-        if self.suit == CardSuit.diamonds:
+        if self == CardSuit.diamonds:
             suit_symb = ':diamonds:'
-        elif self.suit == CardSuit.clubs:
+        elif self == CardSuit.clubs:
             suit_symb = ':clubs:'
-        elif self.suit == CardSuit.hearts:
+        elif self == CardSuit.hearts:
             suit_symb = ':hearts:'
-        elif self.suit == CardSuit.spades:
+        elif self == CardSuit.spades:
             suit_symb = ':spades:'
 
         return suit_symb
