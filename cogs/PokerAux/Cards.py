@@ -27,18 +27,7 @@ class CardRank(IntEnum):
     ace     = 14
 
     def __str__(self) -> str:
-        if self == CardRank.jack:
-            rank_symb = 'J'
-        elif self == CardRank.queen:
-            rank_symb = 'Q'
-        elif self == CardRank.king:
-            rank_symb = 'K'
-        elif self == CardRank.ace:
-            rank_symb = 'A'
-        else:
-            rank_symb = str(self.value)
-
-        return rank_symb
+        return str(self.value) if self <= CardRank.ten else self.name[0].upper()
 
 
 @unique
