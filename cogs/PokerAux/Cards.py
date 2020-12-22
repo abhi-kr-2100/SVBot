@@ -4,7 +4,7 @@ poker cards and deck.
 """
 
 
-from enum import IntEnum, Enum, unique
+from enum import IntEnum, unique
 from random import shuffle
 
 
@@ -42,7 +42,7 @@ class CardRank(IntEnum):
 
 
 @unique
-class CardSuit(Enum):
+class CardSuit(IntEnum):
     """One of the four playing suits."""
 
     spades      = 1
