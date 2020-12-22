@@ -26,6 +26,7 @@ class CardRank(IntEnum):
     king    = 13
     ace     = 14
 
+
 @unique
 class CardSuit(Enum):
     """One of the four playing suits."""
