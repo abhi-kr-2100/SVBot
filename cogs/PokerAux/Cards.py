@@ -40,7 +40,7 @@ class CardSuit(Enum):
 class Card:
     """A playing card."""
 
-    def __init__(self, rank, suit):
+    def __init__(self, rank: CardRank, suit: CardSuit):
         self.rank = rank
         self.suit = suit
 
@@ -91,7 +91,7 @@ class Deck:
 
         shuffle(self.cards)
 
-    def deal(self, n=1):
+    def deal(self, n: int = 1):
         """Deal n cards from top of the deck."""
         
         if len(self.cards) < n:
