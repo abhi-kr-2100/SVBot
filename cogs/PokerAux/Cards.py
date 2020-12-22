@@ -45,10 +45,10 @@ class CardRank(IntEnum):
 class CardSuit(Enum):
     """One of the four playing suits."""
 
-    spades = 1
-    hearts = 2
-    diamonds = 3
-    clubs = 4
+    spades      = 1
+    hearts      = 2
+    diamonds    = 3
+    clubs       = 4
 
     def __str__(self) -> str:
         """Return the appropriate code for the suit's Discord emoji."""
