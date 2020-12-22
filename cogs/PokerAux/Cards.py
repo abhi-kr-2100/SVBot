@@ -45,7 +45,7 @@ class Card:
         self.suit = suit
 
     def pec(self) -> tuple[int, int]:
-        """Supposed to be compatible with the pokereval module."""
+        """Return a tuple that can be used to construct a pokereval.Card."""
 
         return (self.rank.value, self.suit.value)
 
