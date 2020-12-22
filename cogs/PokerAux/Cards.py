@@ -42,18 +42,7 @@ class CardSuit(Enum):
     def __str__(self) -> str:
         """Return the appropriate code for the suit's Discord emoji."""
         
-        suit_symb = ''
-
-        if self == CardSuit.diamonds:
-            suit_symb = ':diamonds:'
-        elif self == CardSuit.clubs:
-            suit_symb = ':clubs:'
-        elif self == CardSuit.hearts:
-            suit_symb = ':hearts:'
-        elif self == CardSuit.spades:
-            suit_symb = ':spades:'
-
-        return suit_symb
+        return f':{self.name}:'
 
 
 class Card:
