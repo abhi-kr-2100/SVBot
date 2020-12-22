@@ -5,7 +5,7 @@ poker players.
 
 
 from enum import Enum, auto, unique
-from typing import Optional
+from typing import List, Optional
 
 from .Cards import Card
 
@@ -49,4 +49,4 @@ class Player:
         # how much the player has betted this round
         self.betted = 0
 
-        self.hole_cards: Optional[list[Card]]
+        self.hole_cards: Optional[List[Card]]
