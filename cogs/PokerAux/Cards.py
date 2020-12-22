@@ -44,7 +44,7 @@ class Card:
         self.rank = rank
         self.suit = suit
 
-    def pec(self):
+    def pec(self) -> tuple[int, int]:
         """Supposed to be compatible with the pokereval module."""
 
         return (self.rank.value, self.suit.value)
@@ -91,7 +91,7 @@ class Deck:
 
         shuffle(self.cards)
 
-    def deal(self, n: int = 1):
+    def deal(self, n: int = 1) -> list[Card]:
         """Deal n cards from top of the deck."""
         
         if len(self.cards) < n:
