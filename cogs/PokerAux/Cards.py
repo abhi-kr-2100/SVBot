@@ -26,6 +26,20 @@ class CardRank(IntEnum):
     king    = 13
     ace     = 14
 
+    def __str__(self) -> str:
+        if self.rank == CardRank.jack:
+            rank_symb = 'J'
+        elif self.rank == CardRank.queen:
+            rank_symb = 'Q'
+        elif self.rank == CardRank.king:
+            rank_symb = 'K'
+        elif self.rank == CardRank.ace:
+            rank_symb = 'A'
+        else:
+            rank_symb = str(self.rank.value)
+
+        return rank_symb
+
 
 @unique
 class CardSuit(Enum):
@@ -35,6 +49,22 @@ class CardSuit(Enum):
     hearts = 2
     diamonds = 3
     clubs = 4
+
+    def __str__(self) -> str:
+        """Return the appropriate code for the suit's Discord emoji."""
+        
+        suit_symb = ''
+
+        if self.suit == CardSuit.diamonds:
+            suit_symb = ':diamonds:'
+        elif self.suit == CardSuit.clubs:
+            suit_symb = ':clubs:'
+        elif self.suit == CardSuit.hearts:
+            suit_symb = ':hearts:'
+        elif self.suit == CardSuit.spades:
+            suit_symb = ':spades:'
+
+        return suit_symb
 
 
 class Card:
@@ -49,33 +79,8 @@ class Card:
 
         return (self.rank.value, self.suit.value)
 
-    def __str__(self):
-        if self.rank == CardRank.jack:
-            rank_name = 'Jack'
-            rank_symb = rank_name[0]
-        elif self.rank == CardRank.queen:
-            rank_name = 'Queen'
-            rank_symb = rank_name[0]
-        elif self.rank == CardRank.king:
-            rank_name = 'King'
-            rank_symb = rank_name[0]
-        elif self.rank == CardRank.ace:
-            rank_name = 'Ace'
-            rank_symb = rank_name[0]
-        else:
-            rank_name = str(self.rank.value)
-            rank_symb = rank_name
-
-        if self.suit == CardSuit.diamonds:
-            suit_symb = ':diamonds:'
-        elif self.suit == CardSuit.clubs:
-            suit_symb = ':clubs:'
-        elif self.suit == CardSuit.hearts:
-            suit_symb = ':hearts:'
-        elif self.suit == CardSuit.spades:
-            suit_symb = ':spades:'
-
-        return f"{rank_symb} {suit_symb}"
+    def __str__(self) -> str:
+        return f"{self.rank} {self.suit}"
 
 
 class Deck:
