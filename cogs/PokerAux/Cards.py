@@ -41,8 +41,6 @@ class Card:
     """A playing card."""
 
     def __init__(self, rank, suit):
-        assert isinstance(rank, CardRank) and isinstance(suit, CardSuit)
-
         self.rank = rank
         self.suit = suit
 
@@ -76,8 +74,6 @@ class Card:
             suit_symb = ':hearts:'
         elif self.suit == CardSuit.spades:
             suit_symb = ':spades:'
-        else:
-            assert False, "This shouldn't have happened!"
 
         return f"{rank_symb} {suit_symb}"
 
@@ -97,8 +93,6 @@ class Deck:
 
     def deal(self, n=1):
         """Deal n cards from top of the deck."""
-
-        assert n >= 0, "Can't deal a negative number of cards!"
         
         if len(self.cards) < n:
             raise ValueError("No enough cards to deal.")
