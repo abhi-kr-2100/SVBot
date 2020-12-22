@@ -6,6 +6,8 @@ poker players.
 
 from enum import Enum, auto, unique
 
+import discord
+
 
 @unique
 class PlayerStatus(Enum):
@@ -21,9 +23,10 @@ class PlayerStatus(Enum):
 class Player:
     """A poker player."""
 
-    def __init__(self, member, chips, status=PlayerStatus.normal):
+    def __init__(self, member: discord.Member, chips: int,
+                    status: PlayerStatus = PlayerStatus.normal) -> None:
         self.member = member
-        self.chips = chips
+        self.chips  = chips
         self.status = status
 
         # is the player still playing
