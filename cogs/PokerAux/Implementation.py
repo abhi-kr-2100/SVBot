@@ -3,10 +3,7 @@
 
 from .Game import Game
 from ..utils.utils import reply
-
-
-STARTING_CHIPS  = 1000
-SM_BLIND_BET    = 10
+from .Constants import STARTING_CHIPS, SM_BLIND_BET
 
 
 async def poker(cog, ctx, players):
