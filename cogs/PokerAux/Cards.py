@@ -59,7 +59,7 @@ class Card:
         return (self.rank.value, self.suit.value)
 
     def __str__(self) -> str:
-        return f"{self.rank} {self.suit}"
+        return f"{str(self.rank)} {self.suit}"
 
 
 class Deck:
