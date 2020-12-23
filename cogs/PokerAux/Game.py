@@ -308,22 +308,32 @@ class Game:
         sm_b = self.players[self.small_blind_i]
         bg_b = self.players[self.big_blind_i]
 
-        sm_b.chips -= self.sm_blind_bet
-        sm_b.betted += self.sm_blind_bet
+        sm_blind_bet = self.sm_blind_bet
+        if sm_b.chips < sm_blind_bet:
+            sm_blind_bet = sm_b.chips
+            sm_b.all_in = True
+            
+        sm_b.chips -= sm_blind_bet
+        sm_b.betted += sm_blind_bet
         await self.ctx.send(
             f'{sm_b.member.mention} posts small blind of '
-            f'{self.sm_blind_bet}.'
+            f'{sm_blind_bet}.'
         )
         
-        bg_b.chips -= 2 * self.sm_blind_bet
-        bg_b.betted += 2 * self.sm_blind_bet
+        bg_blind_bet = 2 * self.sm_blind_bet
+        if bg_b.chips < bg_blind_bet:
+            bg_blind_bet = bg_b.chips
+            bg_b.all_in = True
+
+        bg_b.chips -= bg_blind_bet
+        bg_b.betted += bg_blind_bet
         await self.ctx.send(
             f'{bg_b.member.mention} posts big blind of '
-            f'{2 * self.sm_blind_bet}'
+            f'{bg_blind_bet}'
         )
 
-        self.min_bet = 2 * self.sm_blind_bet
-        self.pot += 3 * self.sm_blind_bet
+        self.min_bet = max(sm_blind_bet, bg_blind_bet)
+        self.pot += sm_blind_bet + bg_blind_bet
 
     async def _deal_holes(self):
         """Deal hole cards to all players."""
