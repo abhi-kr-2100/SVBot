@@ -21,3 +21,4 @@ uk          Europe/Belfast
 australia   Australia/Canberra
 denmark     Europe/Copenhagen
 italy       Europe/Rome
+greece      Europe/Athens
