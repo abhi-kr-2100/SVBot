@@ -1,12 +1,17 @@
 """This module actually implements the methods of the poker cog."""
 
 
+from typing import List
+
+from discord.ext.commands import Context
+
 from .Game import Game
+from .Player import Player
 from ..utils.utils import reply
 from .Constants import STARTING_CHIPS, SM_BLIND_BET
 
 
-async def poker(cog, ctx, players):
+async def poker(cog, ctx: Context, players: List[Player]):
     """Start the game of poker."""
 
     cog.game = Game(
@@ -42,7 +47,7 @@ async def poker(cog, ctx, players):
     await ctx.send(f"Game Over!")
     cog.game = None
 
-async def call(cog, ctx):
+async def call(cog, ctx: Context):
     """Bet the minimum required chips."""
 
     pp = cog.game.pending_players[cog.game.pending_index]
@@ -65,7 +70,7 @@ async def call(cog, ctx):
     cog.game.pending_index += 1
     cog.game.pending_index %= cog.game.n
 
-async def bet(cog, ctx, amt: int):
+async def bet(cog, ctx: Context, amt: int):
     """Place a bet."""
 
     pp = cog.game.pending_players[cog.game.pending_index]
@@ -98,7 +103,7 @@ async def bet(cog, ctx, amt: int):
     cog.game.pending_index += 1
     cog.game.pending_index %= cog.game.n
 
-async def fold(cog, ctx):
+async def fold(cog, ctx: Context):
     await reply(ctx, "folds.")
     
     pp = cog.game.pending_players[cog.game.pending_index]
@@ -108,7 +113,7 @@ async def fold(cog, ctx):
     cog.game.pending_index += 1
     cog.game.pending_index %= cog.game.n
 
-async def all_in(cog, ctx):        
+async def all_in(cog, ctx: Context):        
     pp = cog.game.pending_players[cog.game.pending_index]
     
     await reply(ctx, f"goes all in with {pp.chips}!")
@@ -123,7 +128,7 @@ async def all_in(cog, ctx):
     cog.game.pending_index += 1
     cog.game.pending_index %= cog.game.n
 
-async def chips(cog, ctx, player):        
+async def chips(cog, ctx: Context, player: Player):        
     for p in cog.game.players:
         if p.member == player:
             await ctx.send(f"{p.member.mention} has {p.chips} chips.")
@@ -131,14 +136,14 @@ async def chips(cog, ctx, player):
 
     await ctx.send(f"{player.mention} is not playing with you.")
 
-async def pot(cog, ctx):        
+async def pot(cog, ctx: Context):        
     await ctx.send(f'Pot: {cog.game.pot} chips')
 
-async def turn(cog, ctx):    
+async def turn(cog, ctx: Context):    
     pp = cog.game.pending_players[cog.game.pending_index]
     await ctx.send(f"It's {pp.member.mention}'s turn.")
 
-async def runnable(cog, ctx, pp=True):
+async def runnable(cog, ctx: Context, pp=True):
     """Check against errors like wrong turn or not inside game."""
 
     if cog.game is None:
