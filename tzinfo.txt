@@ -22,4 +22,4 @@ australia   Australia/Canberra
 denmark     Europe/Copenhagen
 italy       Europe/Rome
 greece      Europe/Athens
-canada      Canada/Eastern
+canada      Canada/Pacific
