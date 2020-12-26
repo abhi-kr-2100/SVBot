@@ -49,4 +49,4 @@ class Player:
         # how much the player has betted this round
         self.betted = 0
 
-        self.hole_cards: Optional[List[Card]]
+        self.hole_cards: Optional[List[Card]] = None
