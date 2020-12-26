@@ -6,18 +6,23 @@ the poker game.
 
 import asyncio
 from random import randint, choice
+from typing import List, Optional
 
 from pokereval.card import Card
 from pokereval.hand_evaluator import HandEvaluator
 
+from discord.ext.commands import Context
+
 from .Cards import Deck
+from .Cards import Card as PokerCard
 from .Player import Player, PlayerStatus
 
 
 class Game:
     """A game of poker."""
 
-    def __init__(self, ctx, players, starting_chips, sm_blind):
+    def __init__(self, ctx: Context, players: List[Player],
+                    starting_chips: int, sm_blind: int):
         self.ctx = ctx
 
         self.pot = 0
@@ -30,23 +35,23 @@ class Game:
         self.n = len(players)
 
         # index of the dealer
-        self.di = None
+        self.di: Optional[int] = None
         
-        self.small_blind_i = None
-        self.big_blind_i = None
+        self.small_blind_i: Optional[int] = None
+        self.big_blind_i: Optional[int] = None
 
-        self.community_cards = []
+        self.community_cards: List[PokerCard] = []
 
         # the minimum amount to bet during a particular turn
         self.min_bet = 0
 
         # player whose turn it is
-        self.pending_players = []
+        self.pending_players: List[Player] = []
         self.pending_index = 0
 
-        self.winner = None
+        self.winner: Optional[Player] = None
 
-    def place_bet(self, player, amt):
+    def place_bet(self, player: Player, amt: int):
         """Place a bet of given amout on behalf of the given player."""
 
         self.pot += amt
@@ -278,7 +283,7 @@ class Game:
 
         return len(not_all_in) <= 1
 
-    def _divide_pot(self, winners):
+    def _divide_pot(self, winners: List[Player]):
         """Divide the pot among the winners."""
 
         amt_each = self.pot // len(winners)
@@ -289,7 +294,7 @@ class Game:
 
         choice(winners).chips += amt_left
 
-    def _assign_turns(self, start):
+    def _assign_turns(self, start: int):
         """Change players to be pending turn."""
 
         for i in range(start, start + self.n):
