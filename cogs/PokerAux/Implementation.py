@@ -19,20 +19,24 @@ async def poker(cog, ctx, players):
     while cog.game.winner is None:
         await ctx.send("------ N E W    R O U N D ------")
 
-        await cog.game.preflop()
-        await cog.game.start_betting()
+        try:
+            await cog.game.preflop()
+            await cog.game.start_betting()
 
-        await cog.game.flop()
-        await cog.game.start_betting()
-        
-        await cog.game.turn()
-        await cog.game.start_betting()
-        
-        await cog.game.river()
-        await cog.game.start_betting()
-        
-        await cog.game.showdown()
-        await cog.game.next_round()
+            await cog.game.flop()
+            await cog.game.start_betting()
+            
+            await cog.game.turn()
+            await cog.game.start_betting()
+            
+            await cog.game.river()
+            await cog.game.start_betting()
+            
+            await cog.game.showdown()
+            await cog.game.next_round()
+        except AttributeError:  # the game has been ended by an admin
+            await ctx.send("The game has been ended prematurely.")
+            return
 
     await ctx.send(f"{cog.game.winner.member.mention} wins the game!")
     await ctx.send(f"Game Over!")
