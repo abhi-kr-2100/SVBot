@@ -93,20 +93,47 @@ class NextLiveStreamCog(commands.Cog):
         name='nextls',
         help="Display next livestream in country's timezone."
     )
-    async def nextls(self, ctx, country='Heleen'):
+    async def nextls(self, ctx, country=None):
         """
         Display when the next stream is in given country's timezone.
         
         If no country is given, display in Heleen's timezone.
         """
 
-        country = country.lower()
+        if country is None:
+            conn = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+            cur = conn.cursor()
 
-        if country not in self.timezones:
+            cur.execute(
+                f"""
+                SELECT timezone_name FROM {self.tz_table}
+                    WHERE member_id = %s;
+                """,
+                (ctx.author.id,)
+            )
+            result = cur.fetchone()
+            country = 'Heleen' if result is None else result[0]
+
+        if '/' not in country:
+            country = country.lower()
+
+            if country not in self.timezones:
+                await reply(
+                    ctx,
+                    f"TZ data for {country} is not available yet. "
+                    "You can request the mods to add TZ data for your country."
+                )
+                return
+            tzname = self.timezones[country]
+        else:
+            tzname = country
+
+        try:
+            tz = timezone(tzname)
+        except UnknownTimeZoneError:
             await reply(
                 ctx,
-                f"TZ data for {country} is not available yet. "
-                 "You can request the mods to add TZ data for your country."
+                f"'{tzname}' is not a valid timezone."
             )
             return
 
@@ -115,8 +142,8 @@ class NextLiveStreamCog(commands.Cog):
         except ValueError:
             await reply(
                 ctx,
-                "No upcoming streams found. Wait for the study calendar to be "
-                "updated. This may take a few days."
+                "No upcoming streams found. Wait for the study calendar to "
+                "be updated. This may take a few days."
             )
             return
         except ConnectionError as ex:
@@ -124,16 +151,6 @@ class NextLiveStreamCog(commands.Cog):
                 ctx,
                 str(ex) + " This shouldn't have happened. "
                 "Please note the status code and inform the mods."
-            )
-            return
-
-        try:
-            tz = timezone(self.timezones[country])
-        except UnknownTimeZoneError:
-            await reply(
-                ctx,
-                f"'{self.timezones[country]}' is not a valid timezone. "
-                 "Please contact the mods about this."
             )
             return
 
@@ -146,7 +163,7 @@ class NextLiveStreamCog(commands.Cog):
             msg = ("The next livestream is on "
                   f"{start_time.strftime(self.time_format)}")
             if country != 'Heleen'.lower():
-                msg += f" (time according to {self.timezones[country]})"
+                msg += f" (time according to {tzname})"
             else:
                 msg += " (Heleen's original time)"
 
