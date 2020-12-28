@@ -7,8 +7,11 @@ timezone.
 from os import getenv
 
 from datetime import datetime
+
 from pytz import timezone
 from pytz.exceptions import UnknownTimeZoneError
+
+import psycopg2
 
 from requests import get as http_get
 
@@ -25,6 +28,66 @@ class NextLiveStreamCog(commands.Cog):
 
         self.timezones = self._get_timezones()
         self.time_format = "%B %d at %I:%M %P"
+
+        self.tz_table = 'timezones'
+
+        conn = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+        cur = conn.cursor()
+
+        cur.execute(
+            f"""
+            CREATE TABLE IF NOT EXISTS {self.tz_table} (
+                id              SERIAL PRIMARY KEY,
+                member_id       BIGINT UNIQUE,
+                timezone_name   TEXT
+            );
+            """
+        )
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+    @commands.command(
+        name='tzset',
+        help='Set a particular timezone for yourself.'
+    )
+    async def tzset(self, ctx: commands.Context, tz_name: str) -> None:
+        """Save the given timezone for the user who calls this command."""
+
+        user_id = ctx.author.id
+        try:
+            tz = timezone(tz_name)
+        except UnknownTimeZoneError:
+            await reply(
+                ctx,
+                f"{tz_name} is not a valid timezone name. A valid timezone name"
+                " looks like this: Europe/Brussels. You can find the correct "
+                "timezone for your country/city here: "
+                "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+            )
+            return
+
+        conn = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+        cur = conn.cursor()
+
+        cur.execute(
+            f"""
+            INSERT INTO {self.tz_table} (member_id, timezone_name)
+            VALUES (%s, %s)
+            ON CONFLICT (member_id)
+            DO
+                UPDATE SET timezone_name = EXCLUDED.timezone_name;
+            """,
+
+            (user_id, tz_name)
+        )
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        await reply(ctx, f"You've successfully set your timezone to {tz_name}")
 
     @commands.command(
         name='nextls',
