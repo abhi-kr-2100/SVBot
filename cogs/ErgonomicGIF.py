@@ -4,7 +4,7 @@
 from discord.ext import commands
 
 from .utils.utils import reply
-from .ErgonomicGIFAux import Implementations
+from .ErgonomicGIFAux import Implementation
 
 
 class ErgonomicGIF(commands.Cog):
@@ -16,7 +16,7 @@ class ErgonomicGIF(commands.Cog):
         self.users_table = 'GIFUsers'
         self.regs_table = 'GIFRegistrations'
 
-        Implementations.create_tables(self.users_table, self.regs_table)
+        Implementation.create_tables(self.users_table, self.regs_table)
         
     @commands.command(
         name='newgif',
@@ -25,8 +25,8 @@ class ErgonomicGIF(commands.Cog):
     async def newgif(self, ctx: commands.Context, key: str, url: str):
         """Register a given GIF's URL to the given keyword."""
 
-        uid = Implementations.get_uid(self.users_table, ctx.author.id)
-        Implementations.create_registration(self.regs_table, uid, key, url)
+        uid = Implementation.get_uid(self.users_table, ctx.author.id)
+        Implementation.create_registration(self.regs_table, uid, key, url)
 
         await reply(ctx, "GIF registration successfully created.")
 
@@ -37,8 +37,8 @@ class ErgonomicGIF(commands.Cog):
     async def gif(self, ctx: commands.Context, key: str):
         """Display the GIF associated with key."""
 
-        uid = Implementations.get_uid(self.users_table, ctx.author.id)
-        url = Implementations.get_gif_url(self.regs_table, uid, key)
+        uid = Implementation.get_uid(self.users_table, ctx.author.id)
+        url = Implementation.get_gif_url(self.regs_table, uid, key)
 
         if url is None:
             await reply(ctx, f"No GIF has been associated with {key}.")
@@ -52,8 +52,8 @@ class ErgonomicGIF(commands.Cog):
     async def gifls(self, ctx: commands.Context):
         """List all GIF associations that the user has created."""
 
-        uid = Implementations.get_uid(self.users_table, ctx.author.id)
-        keys = Implementations.get_keys(self.regs_table, uid)
+        uid = Implementation.get_uid(self.users_table, ctx.author.id)
+        keys = Implementation.get_keys(self.regs_table, uid)
 
         await reply(ctx, ', '.join(keys))
 
@@ -62,8 +62,8 @@ class ErgonomicGIF(commands.Cog):
         help='Remove a keyword along with all GIFs associated with it.'
     )
     async def gifrm(self, ctx: commands.Context, key: str):
-        uid = Implementations.get_uid(self.users_table, ctx.author.id)
-        success = Implementations.remove_key(self.regs_table, uid, key)
+        uid = Implementation.get_uid(self.users_table, ctx.author.id)
+        success = Implementation.remove_key(self.regs_table, uid, key)
 
         if not success:
             await reply(ctx, "This key is not present in the first place!")
