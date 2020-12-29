@@ -124,3 +124,22 @@ def get_keys(regs_table: str, uid: int):
     con.close()
 
     return list(set(r[0] for r in results))
+
+
+def remove_key(regs_table: str, uid: int, key: str):
+    """Remove the key belonging to the user with ID uid."""
+
+    con = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+    cur = con.cursor()
+
+    cur.execute(
+        f"DELETE FROM {regs_table} WHERE user_id = %s AND keyword = %s",
+        (uid, key)
+    )
+
+    con.commit()
+
+    cur.close()
+    con.close()
+
+    return True
