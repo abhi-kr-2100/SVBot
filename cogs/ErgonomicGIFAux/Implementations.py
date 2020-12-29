@@ -123,4 +123,4 @@ def get_keys(regs_table: str, uid: int):
     cur.close()
     con.close()
 
-    return [r[0] for r in results]
+    return list(set(r[0] for r in results))
