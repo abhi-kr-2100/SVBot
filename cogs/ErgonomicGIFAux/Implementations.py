@@ -103,6 +103,9 @@ def get_gif_url(regs_table: str, uid: int, key: str):
     results = cur.fetchall()
     if not results:
         return None
+
+    cur.close()
+    con.close()
     
     return choice(results)[0]
 
@@ -116,4 +119,8 @@ def get_keys(regs_table: str, uid: int):
     cur.execute(f"SELECT keyword FROM {regs_table} WHERE user_id = %s", (uid,))
 
     results = cur.fetchall()
+
+    cur.close()
+    con.close()
+
     return [r[0] for r in results]
