@@ -57,6 +57,19 @@ class ErgonomicGIF(commands.Cog):
 
         await reply(ctx, ', '.join(keys))
 
+    @commands.command(
+        name='gifrm',
+        help='Remove a keyword along with all GIFs associated with it.'
+    )
+    async def gifrm(self, ctx: commands.Context, key: str):
+        uid = Implementations.get_uid(self.users_table, ctx.author.id)
+        success = Implementations.remove_key(self.regs_table, uid, key)
+
+        if not success:
+            await reply(ctx, "This key is not present in the first place!")
+        else:
+            await reply(ctx, "Key deleted.")
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(ErgonomicGIF(bot))
