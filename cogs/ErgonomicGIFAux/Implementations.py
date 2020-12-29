@@ -105,3 +105,15 @@ def get_gif_url(regs_table: str, uid: int, key: str):
         return None
     
     return choice(results)[0]
+
+
+def get_keys(regs_table: str, uid: int):
+    """Return all keys created by user with id uid."""
+
+    con = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+    cur = con.cursor()
+
+    cur.execute(f"SELECT keyword FROM {regs_table} WHERE user_id = %s", (uid,))
+
+    results = cur.fetchall()
+    return [r[0] for r in results]
