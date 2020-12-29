@@ -45,6 +45,18 @@ class ErgonomicGIF(commands.Cog):
         else:
             await ctx.send(url)
 
+    @commands.command(
+        name='gifls',
+        help='Display all GIF associations that you have created.'
+    )
+    async def gifls(self, ctx: commands.Context):
+        """List all GIF associations that the user has created."""
+
+        uid = Implementations.get_uid(self.users_table, ctx.author.id)
+        keys = Implementations.get_keys(self.regs_table, uid)
+
+        await reply(ctx, ', '.join(keys))
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(ErgonomicGIF(bot))
