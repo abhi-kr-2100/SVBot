@@ -70,6 +70,19 @@ class ErgonomicGIF(commands.Cog):
         else:
             await reply(ctx, "Key deleted.")
 
+    @commands.command(
+        name='gifkeyls',
+        help='Display all GIF URLs associated with the given key.'
+    )
+    async def gifkeyls(self, ctx: commands.Context, key: str):
+        """Display all GIF URLs associated with the given key."""
+
+        uid = Implementation.get_uid(self.users_table, ctx.author.id)
+        urls = Implementation.get_urls(self.regs_table, uid, key)
+
+        for u in urls:
+            await ctx.send(u)
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(ErgonomicGIF(bot))
