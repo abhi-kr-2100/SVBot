@@ -143,3 +143,21 @@ def remove_key(regs_table: str, uid: int, key: str):
     con.close()
 
     return True
+
+def get_urls(regs_table: str, uid: int, key: str):
+    """Return all URLs associated with the given key."""
+
+    con = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+    cur = con.cursor()
+
+    cur.execute(
+        f"SELECT url FROM {regs_table} WHERE user_id = %s AND keyword = %s",
+        (uid, key)
+    )
+
+    urls = list(set(u[0] for u in cur.fetchall()))
+
+    cur.close()
+    con.close()
+
+    return urls
