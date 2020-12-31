@@ -161,3 +161,22 @@ def get_urls(regs_table: str, uid: int, key: str):
     con.close()
 
     return urls
+
+def remove_url(regs_table: str, uid: int, key: str, url: str):
+    """Remove the given URL's registration."""
+
+    con = psycopg2.connect(getenv('DATABASE_URL'), sslmode='require')
+    cur = con.cursor()
+
+    cur.execute(
+        f"""
+        DELETE FROM {regs_table}
+            WHERE user_id = %s AND keyword = %s AND url = %s
+        """,
+        (uid, key, url)
+    )
+
+    con.commit()
+
+    cur.close()
+    con.close()
