@@ -83,6 +83,18 @@ class ErgonomicGIF(commands.Cog):
         for u in urls:
             await ctx.send(f"`{u}`")
 
+    @commands.command(
+        name='gifurlrm',
+        help='Delete one URL associated with a given key.'
+    )
+    async def gifurlrm(self, ctx: commands.Context, key: str, url: str):
+        """Remove URL from key."""
+
+        uid = Implementation.get_uid(self.users_table, ctx.author.id)
+        Implementation.remove_url(self.regs_table, uid, key, url)
+
+        await reply(ctx, "URL deleted.")
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(ErgonomicGIF(bot))
