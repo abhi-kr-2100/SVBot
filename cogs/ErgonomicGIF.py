@@ -81,7 +81,7 @@ class ErgonomicGIF(commands.Cog):
         urls = Implementation.get_urls(self.regs_table, uid, key)
 
         for u in urls:
-            await ctx.send(u)
+            await ctx.send(f"`{u}`")
 
 
 def setup(bot: commands.Bot):
