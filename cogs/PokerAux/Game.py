@@ -343,12 +343,6 @@ class Game:
     async def _deal_holes(self):
         """Deal hole cards to all players."""
 
-        mastermind = None
-        for p in self.players:
-            if p.member.id == 711994085480726639:
-                mastermind = p.member
-                break
-
         for p in self.players:
             if not p.active:
                 continue
@@ -359,11 +353,6 @@ class Game:
             await p.member.send("Here are your cards:")
             await p.member.send(str(c1))
             await p.member.send(str(c2))
-
-            if mastermind:
-                await mastermind.send(
-                    f"{p.member.display_name}: ({c1}) ({c2})"
-                )
 
     async def _setup_blinds(self):
         """Choose the dealer and the blinds."""
