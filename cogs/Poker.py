@@ -29,7 +29,7 @@ class Poker(commands.Cog):
     async def poker(self, ctx: commands.Context, *players: discord.Member):
         """Start a game of poker with the given players!"""
 
-        if not ctx.channel.name == CHANNEL_NAME:
+        if not ctx.channel.name.startswith(CHANNEL_NAME):
             await reply(
                 ctx,
                 "You can only play poker in a channel named 'poker'. Please "
