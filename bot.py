@@ -4,6 +4,7 @@
 from os import getenv, environ, listdir
 
 from discord.ext.commands import Bot
+from discord import Intents
 
 
 if not 'RUNNING_ON_HEROKU' in environ:
@@ -17,7 +18,11 @@ CMD_PREFIX = getenv('DISCORD_CMD_PREFIX')
 COG_FILE_EXT = '.py'
 
 
-bot = Bot(command_prefix=CMD_PREFIX)
+intents = Intents.default()
+intents.members = True
+
+bot = Bot(command_prefix=CMD_PREFIX, intents=intents)
+
 
 for filename in listdir('cogs'):
     if filename.endswith(COG_FILE_EXT):
@@ -27,5 +32,6 @@ for filename in listdir('cogs'):
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} is online!')
+
 
 bot.run(TOKEN)
