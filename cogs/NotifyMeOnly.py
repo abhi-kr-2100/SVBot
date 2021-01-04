@@ -8,7 +8,6 @@ from discord.abc import Messageable
 from discord import Member, User, Message
 
 from discord.ext import commands
-import discord
 
 
 class NotifyMeOnly(commands.Cog):
