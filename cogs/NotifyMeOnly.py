@@ -18,12 +18,14 @@ class NotifyMeOnly(commands.Cog):
         self.my_id = 711994085480726639
         self.me = None
 
+        self.targets = ['theStudyVibes']
+
     @commands.Cog.listener()
     async def on_message(self, msg: Message):
         if self.me is None:
             self.me = await self.bot.fetch_user(self.my_id)
 
-        if msg.author.display_name == 'theStudyVibes':
+        if msg.author.display_name in self.targets:
             await self.me.send("Alert! Alert!")
 
     @commands.Cog.listener()
@@ -32,7 +34,7 @@ class NotifyMeOnly(commands.Cog):
         if self.me is None:
             self.me = await self.bot.fetch_user(self.my_id)
 
-        if user.display_name == 'theStudyVibes':
+        if user.display_name in self.targets:
             await self.me.send("Alert!")
 
 
