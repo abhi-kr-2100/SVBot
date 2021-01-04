@@ -24,3 +24,4 @@ italy       Europe/Rome
 greece      Europe/Athens
 canada      Canada/Pacific
 morocco     Africa/Casablanca
+nepal       Asia/Kathmandu
