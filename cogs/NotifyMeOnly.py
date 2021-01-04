@@ -5,7 +5,7 @@ from typing import Union
 from datetime import datetime
 
 from discord.abc import Messageable
-from discord import Member, User, Message
+from discord import Member, User, Message, TextChannel
 
 from discord.ext import commands
 
@@ -25,8 +25,8 @@ class NotifyMeOnly(commands.Cog):
         if self.me is None:
             self.me = await self.bot.fetch_user(self.my_id)
 
-        if msg.author.display_name in self.targets:
-            await self.me.send("Alert! Alert!")
+        if (name := msg.author.display_name) in self.targets:
+            await self.me.send(f"{name} sent a message: {msg.jump_url}.")
 
     @commands.Cog.listener()
     async def on_typing(self, channel: Messageable, user: Union[User, Member],
@@ -34,8 +34,13 @@ class NotifyMeOnly(commands.Cog):
         if self.me is None:
             self.me = await self.bot.fetch_user(self.my_id)
 
-        if user.display_name in self.targets:
-            await self.me.send("Alert!")
+        if (name := user.display_name) in self.targets:
+            msg = f"{name} is typing"
+            if isinstance(channel, TextChannel):
+                msg += f" in {channel.mention}"
+            msg += "."
+
+            await self.me.send(msg)
 
 
 def setup(bot: commands.Bot):
