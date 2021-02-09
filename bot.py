@@ -4,7 +4,6 @@
 from os import getenv, environ, listdir
 
 from discord.ext.commands import Bot
-from discord import Intents
 
 
 if not 'RUNNING_ON_HEROKU' in environ:
@@ -18,10 +17,7 @@ CMD_PREFIX = getenv('DISCORD_CMD_PREFIX')
 COG_FILE_EXT = '.py'
 
 
-intents = Intents.default()
-intents.members = True
-
-bot = Bot(command_prefix=CMD_PREFIX, intents=intents)
+bot = Bot(command_prefix=CMD_PREFIX)
 
 
 for filename in listdir('cogs'):
