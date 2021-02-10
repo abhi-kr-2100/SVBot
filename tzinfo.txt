@@ -14,6 +14,7 @@ japan               Asia/Tokyo
 egypt               Africa/Cairo
 germany             Europe/Berlin
 turkey              Europe/Istanbul
+türkiye             Europe/Istanbul
 netherlands         Europe/Amsterdam
 portugal            Europe/Lisbon
 england             Europe/Belfast
